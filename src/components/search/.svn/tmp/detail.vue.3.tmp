@@ -1,0 +1,2104 @@
+<<<<<<< .mine
+<template>
+	<div id="detail">
+		<!--头部背景图片-->
+		<div class="header_picture"></div>
+		<!--后退前进-->
+		<img src="../../assets/icon_zuola@3x.png" alt class="houtui" @click="goBack" />
+
+		<img src="../../assets/3dian@3x.png" alt class="qianjin" @click="goNavAdd" />
+		<div class="jubao" v-show="!show">
+			<div @click="users_report(userInfo.username,userInfo.uid,userInfo.phone)">举报该用户</div>
+			<div style="border: none;">不让ta看我</div>
+		</div>
+		<!--照片-->
+		<img src="../../assets/zp_byz@3x.png" alt class="photo" />
+		<!--昵称-->
+		<div class="userBox">
+			<div id="" class="flex align-items-center">
+				<div class="nickname">{{userInfo.username}}</div>
+				<img v-show="userInfo.whetherAutonym==0" src="../../../static/img/shiming2.png" class="shiming" />
+				<img v-show="userInfo.whetherAutonym==1" src="../../assets/shiming@2x.png" class="shiming" />
+				<img v-show="userInfo.whetherVip==0" src="../../images/my/vip@3xv.png" class="vip" />
+				<img v-show="userInfo.whetherVip==1" src="../../assets/vip@3x.png" class="vip" />
+
+			</div>
+			<!--个人信息-->
+			<div class="peason">{{userInfo.age}}岁|{{userInfo.height}}厘米|{{userInfo.educationalStatus|educationalStatusFilters}}</div>
+
+		</div>
+		<!--用户状态-->
+		<div class="user_state">
+			<div class="state_1">
+				<img src="../../assets/icon_tixing@3x.png" />
+				<div class="state_1-1">上线提醒</div>
+			</div>
+			<div class style="width: 0.5px;height: 13px;color: #979797;"></div>
+			<div class="state_2" v-show="userInfo.whetherOnline==1">
+				<img src="../../assets/icon_zxian@3x.png" alt />
+				<div class="state_2-1">用户在线</div>
+			</div>
+		</div>
+		<!--靓照展示-->
+		<div class="liangzhao">
+			<img v-for="(item, index) in userInfo.albumList" :src="item" />
+			<!--<img src="../../../static/img/tx_wodetouxiang@2x.png" />
+			<img src="../../../static/img/tx_wodetouxiang@2x.png" />
+			<img src="../../../static/img/tx_wodetouxiang@2x.png" />
+			<img src="../../../static/img/tx_wodetouxiang@2x.png" />-->
+			<!--<h5 v-show="!userInfo.albumList.length" style="margin:0 auto;">暂无图片</h5>-->
+		</div>
+		<!--<div v-show="userInfo.albumList.length==0" class="text-center"><span>暂无相册</span></div>-->
+		<!--用户动态-->
+		<div class="dynamic">
+			<div class="dynamic_1">
+				<b>用户动态</b>
+			</div>
+			<div class="dynamic_2">
+				<div class="dynamic_2-1" v-for="item in currentState">
+					<span class="dynamic_2-1_1">{{item.state}}</span>
+					<span class="dynamic_2-1_2" @click="watch">点击查看</span>
+				</div>
+			</div>
+			<div class="report">认证和属地信息仅供参考，请谨慎交往；如发现与注册资料不符，请提高警惕。建议与活跃度较高用户发信，更易收到回信。</div>
+		</div>
+		<div class="footer">
+			<img src="../../assets/dibubeijing@3x.png" class="beijing" />
+			<img src="../../assets/icon_pl@3x.png" class="siliao" />
+			<span style="position: fixed;bottom:15px;left: 62.5px;">私聊</span>
+			<img src="../../assets/icon_shousuo2@2x.png" alt class="songli" />
+			<span style="position: fixed;bottom:15px;left:182px;">送礼</span>
+			<img src="../../assets/icon_guanzhu@3x.png" class="guanzhu" />
+			<span style="position: fixed;bottom:15px;left: 305px;">关注</span>
+		</div>
+		<!--自我介绍-->
+		<div class="introduce">
+			<div class="ziwojieshao">
+				<b>自我介绍</b>
+			</div>
+			<div class="jieshao">{{userInfo.selfIntroduction}}</div>
+		</div>
+		<!---->
+		<div id="lianxi">
+			<div class="method">联系方式</div>
+			<div class="detail_method">
+				<div class="detail_1">QQ:</div>
+				<div class="detail_2">{{userInfo.qq?userInfo.qq:'暂无数据'}}</div>
+			</div>
+			<div class="detail_method">
+				<div class="detail_1">微信：</div>
+				<div class="detail_2">{{userInfo.wechat?userInfo.wechat:'暂无数据'}}</div>
+			</div>
+			<div class="detail_method">
+				<div class="detail_1">邮箱：</div>
+				<div class="detail_2">{{userInfo.email?userInfo.email:'暂无数据'}}</div>
+			</div>
+			<div class="detail_foot">在权限设置中可选择对联系方式公开或隐藏</div>
+		</div>
+		<!--个人资料-->
+		<div class="pearson">
+			<div class="method">个人资料</div>
+
+			<div class="ID">
+				<div class="ID_detail1">ID:</div>
+				<div class="ID_detail2">{{userInfo.uid}}</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">所在地：</div>
+				<div class="ID_detail2">{{userInfo.placeOfWork}}</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">年龄:</div>
+				<div class="ID_detail2">{{userInfo.age}}岁</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">身高:</div>
+				<div class="ID_detail2">{{userInfo.height}}cm</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">体重:</div>
+				<div class="ID_detail2">{{userInfo.weight}}kg</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">民族:</div>
+				<div class="ID_detail2">{{userInfo.nation}}</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">血型:</div>
+				<div class="ID_detail2">{{userInfo.bloodType|bloodTypeFilter}}</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">星座:</div>
+				<div class="ID_detail2">{{userInfo.constellation}}</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">生肖:</div>
+				<div class="ID_detail2">{{userInfo.zodiac}}</div>
+			</div>
+			<div class="ID">
+				<div class="ID_detail1">婚姻状况:</div>
+				<div class="ID_detail2">{{userInfo.maritalStatus|maritalStatusFilter}}</div>
+			</div>
+		</div>
+		<div class="footer">
+			<img src="../../assets/dibubeijing@3x.png" class="beijing" />
+			<img src="../../assets/icon_pl@3x.png" class="siliao" @click="siliao" />
+			<span style="position: fixed;bottom:15px;left: 62.5px;" @click="siliao">私聊</span>
+			<img src="../../assets/icon_shousuo2@2x.png" alt class="songli" @click="songli" />
+			<span style="position: fixed;bottom:15px;left:182px;" @click="songli">送礼</span>
+			<img src="../../assets/icon_guanzhu@3x.png" class="guanzhu" @click="guanzhu" />
+			<span style="position: fixed;bottom:15px;left: 305px;" @click="guanzhu">关注</span>
+		</div>
+		<!--底部透明层-->
+		<div class="guodu"></div>
+		<!--模态框-->
+		<div class="mubu" @click="isSongli" v-show="state"></div>
+		<div class="model" v-show="state">
+			<div class="model_1">赠送礼物</div>
+			<div class="huizong" style="display:flex;">
+				<swiper :options="swiperOption" class="swiper-wrap swiperBox" ref="mySwiper " v-if="banner.length!=0">
+					<swiper-slide class="swiper-slide_item" v-for="(item,index) in banner" :key="index">
+
+						<div class="liwu" v-for="(item,index) in list" @click="xuanzesongli(index)" :class="{'active':currentSort==index}">
+							<img src="../../assets/meigui99@4x.png" />
+							<div class="liwu_font">玫瑰99</div>
+						</div>
+
+					</swiper-slide>
+					<div class="swiper-pagination dnot" v-for="(item,index) in banner" :key="index" slot="pagination"></div>
+
+				</swiper>
+
+				<!--<div class="liwu" v-for="(item,index) in list" @click="xuanzesongli(index)" :class="{'active':currentSort==index}">
+					<img src="../../assets/meigui99@4x.png" />
+					<div class="liwu_font">玫瑰99</div>
+				</div>
+				<img src="../../assets/3dian_da@3x.png" alt class="dian" />-->
+				<!--赠送取消-->
+				<div class="xuanze">
+					<div class="xuanze_1">确定</div>
+					<div class="xuanze_2" @click="state=false">取消</div>
+				</div>
+			</div>
+		</div>
+		<div class="dialog" v-show="!show">
+			<img src="../../../static/img/hyfl.png" alt="">
+			<div class="dialog_txt1"> 此功能为VIP会员特权</div>
+			<div class="dialog_txts1">给最新注册会员发信，更易收到回信</div>
+			<div class="dialog_txt2">会员尊享20多项特权，快速提高成功率</div>
+			<div class="dialog_txt">立即升级会员 </div>
+			<div class="dialog_txts" @click="store">暂不升级会员</div>
+		</div>
+		<div class="path"></div>
+	</div>
+</template>
+
+<script>
+	import axios from 'axios'
+	import qs from 'qs'
+	import details from "./details";
+	import {Toast} from "vant"
+
+	export default {
+		name: "detail",
+		data() {
+			return {
+				show: true,
+				showBackIcon: "true",
+				title: "",
+				rightTitle: "···",
+				currentSort: "",
+				arr: [{
+						num: 1,
+						id: 1
+					},
+					{
+						num: 2,
+						id: 2
+					},
+					{
+						num: 3,
+						id: 3
+					},
+					{
+						num: 4,
+						id: 4
+					},
+					{
+						num: 5,
+						id: 5
+					},
+					{
+						num: 6,
+						id: 6
+					},
+					{
+						num: 7,
+						id: 7
+					}
+				],
+				list: [1, 2, 3, 4, 5, 6],
+				currentState: [{
+					state: "在线状态"
+				}, {
+					state: "最近登录"
+				}, {
+					state: "登录次数"
+				}, {
+					state: "注册时间"
+				}, {
+					state: "IP所属地"
+				}, {
+					state: "手机属地"
+				}, ],
+				currentSort: "",
+				state: "",
+				userInfo: new Object,
+				detailimages: [{
+					image: 'https://upload.jianshu.io/users/upload_avatars/6519497/ab020fc6-26f6-4195-a543-db862b1fb4ca.jpeg?imageMogr2/auto-orient/strip|imageView2/1/w/90/h/90/format/webp'
+				}],
+				showBackIcon: 'false',
+				title: '升级会员',
+				banner: [{
+						image: '/static/img/banner2@2x.5288369.png'
+					},
+					{
+						image: '/static/img/banner2@2x.5288369.png'
+					},
+				],
+				imgIndex: 1,
+				swiperOption: {
+					//是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
+					notNextTick: true,
+					//循环
+					loop: false,
+					//设定初始化时slide的索引
+					initialSlide: 0,
+					//自动播放
+					autoplay: {
+						delay: 300,
+						stopOnLastSlide: false,
+						/* 触摸滑动后是否继续轮播 */
+						disableOnInteraction: true
+					},
+					//滑动速度
+					speed: 300,
+					//滑动方向
+					direction: "horizontal",
+					//小手掌抓取滑动
+					grabCursor: true,
+					on: {
+						//滑动之后回调函数
+						slideChangeTransitionStart: function() {
+							/* realIndex为滚动到当前的slide索引值 */
+							this.imgIndex = this.realIndex - 1;
+						},
+					},
+					//分页器设置
+					pagination: {
+						el: ".swiper-pagination",
+						clickable: true,
+						type: "bullets"
+					}
+				},
+				selectIndex: 0,
+				show:true
+			};
+		},
+		mounted() {
+
+		},
+		created() {
+			this.prefixResApi = this.resourcesApi;
+			this.getUserDetail();
+			//			var temp=[];
+			//			var arr2=['a','b','c','cd'];
+			//			for(var  i=0;i<arr2.length;i+=2){
+			//				temp.push(arr2.slice(i,i+2))
+			//			}
+			//			console.log(temp)
+		},
+		methods: {
+			//查看别人信息
+			getUserDetail() {
+				console.log('sdjf');
+				var requestUrl = this.apiUrl + 'user/getUserDetail';
+				var requestData = {
+					type: 1,
+					uid: 'c589eef2',
+					ruid: '59cd3b4a'
+				};
+				axios.post(requestUrl,
+						qs.stringify(requestData), {
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							}
+						},
+					).then((res) => {
+						var resdata = res.data;
+						if(resdata.code == 200) {
+							this.userInfo = resdata.data;
+							console.log(this.userInfo);
+						}
+						else if(resdata.code == 1016){
+this.$router.go(-1);
+this.$toast(resdata.msg)
+            }
+
+					})
+					.catch((error) => {})
+			},
+			users_report(userName, userId, phone) {
+
+				this.$router.push({
+					path: '/users_report',
+					query: {
+						userName: userName,
+						uid: userId,
+						phone: phone
+					}
+				});
+			},
+			goBack() {
+				this.$router.go(-1);
+			},
+			goNavAdd() {
+				this.show = !this.show;
+			},
+			xuanzesongli(index) {
+				//alert(index)
+				this.currentSort = index;
+			},
+			isSongli() {
+				this.state = !this.state;
+			},
+			songli() {
+				this.state = true;
+			},
+			siliao() {},
+			guanzhu() {},
+			  store(){
+           	this.show=!this.show
+          },
+          watch(){
+          	if(!this.userInfo.whetherVip){
+          		this.show=false
+          	}else{
+          		Toast("请充值VIP，再来查看！")
+          	}
+          }
+		}
+	};
+</script>
+
+<style scoped="scoped" lang="scss">
+	@import url("../../styles/mycomstyle.css");
+	.jubao {
+		position: absolute;
+		left: 70%;
+		top: 8%;
+		width: 100px;
+		background: #a1a1a1;
+		border-radius: 8px;
+		div {
+			// width: 40px;
+			height: 30px;
+			border-bottom: 1px solid #ccc;
+			color: #fff;
+			text-align: center;
+			line-height: 30px;
+		}
+	}
+
+	#detail {
+		/*position: relative;*/
+		background: #f1f1f1;
+		height: 100%;
+		/*height: 612.5px;*/
+		margin-bottom: 54.5px;
+	}
+
+	.header_picture {
+		height: 111px;
+		width: 100%;
+		background-image: url(../../assets/zp_byz@3x.png);
+		/*background-position: 0px -10px;*/
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		filter: blur(5px);
+	}
+
+	.houtui {
+		width: 10px;
+		height: 18px;
+		position: absolute;
+		top: 34.5px;
+		left: 26.5px;
+	}
+
+	.qianjin {
+		width: 25px;
+		height: 5px;
+		position: absolute;
+		top: 34.5px;
+		left: 323px;
+	}
+
+	.photo {
+		width: 80.5px;
+		height: 80.5px;
+		position: absolute;
+		top: 65px;
+		left: 26.5px;
+	}
+
+	.userBox {
+		position: absolute;
+		top: 66.5px;
+		left: 119px;
+		.nickname {
+			color: #ffffff;
+			font-size: 15.5px;
+			max-width: 150px;
+			height: 14.5px;
+			overflow: hidden;
+			line-height: 14.5px;
+			margin-right: 5px;
+		}
+		.shiming {
+			width: 27.5px;
+			height: 16.5px;
+			margin-right: 5px;
+		}
+		.vip {
+			width: 27.5px;
+			height: 16.5px;
+		}
+		.peason {
+			/*width: 130px;*/
+			margin-top: 2px;
+			height: 13.5px;
+			color: #ffffff;
+			font-size: 13.5px;
+			letter-spacing: 1px;
+		}
+	}
+
+	.user_state {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.state_1 {
+		margin-left: 119px;
+		margin-top: 7.5px;
+		background: #d8d8d8;
+		width: 84.5px;
+		height: 23px;
+		font-size: 13.5px;
+		color: #626262;
+		padding-bottom: 5px;
+		display: flex;
+		img {
+			width: 12px;
+			height: 12px;
+			margin-left: 6.5px;
+			margin-top: 8.5px;
+		}
+	}
+
+	.state_1-1 {
+		width: 54px;
+		height: 12.5px;
+		margin-top: 5px;
+	}
+
+	.state_2 {
+		margin-right: 63.5px;
+		margin-top: 10.5px;
+		color: #626262;
+		font-size: 13px;
+		display: flex;
+		img {
+			width: 13px;
+			height: 13px;
+			margin-top: 6.5px;
+		}
+	}
+
+	.state_2-1 {
+		width: 54.5px;
+		height: 13px;
+		margin-top: 4.5px;
+		margin-left: 5.5px;
+	}
+
+	.liangzhao {
+		margin-top: 11.5px;
+		display: flex;
+		overflow: hidden;
+		img {
+			width: 58px;
+			height: 58px;
+			margin-left: 7.5px;
+			border-radius: 3px;
+		}
+	}
+
+	.liangzhao>img:first-child {
+		margin-left: 27.5px;
+	}
+
+	.dynamic {
+		width: 94.67%;
+		margin: 0 auto;
+		background: #ffffff;
+		margin-top: 6.5px;
+		border-radius: 4px;
+		box-shadow: #202020;
+		padding-bottom: 15px;
+		.dynamic_1 {
+			width: 88%;
+			border-bottom: 0.5px solid #eaeaea;
+			margin: 0 auto;
+			height: 40px;
+			line-height: 40px;
+			color: #313131;
+			font-size: 15px;
+			padding-left: 5px;
+		}
+	}
+
+	.dynamic_2 {
+		/*margin-top:15px;*/
+		display: flex;
+		flex-wrap: wrap;
+		.dynamic_2-1 {
+			width: 150px;
+			text-align: center;
+			max-width: 150px;
+			height: 33px;
+			line-height: 33px;
+			background: #ffefeb;
+			border-radius: 16.5pt;
+			margin-left: 13.5px;
+			font-size: 14px;
+			overflow: hidden;
+			margin-top: 15px;
+			.dynamic_2-1_1 {
+				width: 50px;
+				color: #363535;
+			}
+			.dynamic_2-1_2 {
+				display: inline-block;
+				margin-left: 10px;
+				color: #f22a59;
+			}
+		}
+	}
+
+	.report {
+		width: 84.8%;
+		word-break: break-all;
+		margin: 0 auto;
+		font-size: 14px;
+		color: #A1A1A1;
+		margin-top: 22.5px;
+		font-size: 14px;
+	}
+
+	.footer {
+		/*height: 54.5px;*/
+		width: 100%;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	}
+
+	.beijing {
+		height: 100%;
+		width: 100%;
+		/*vertical-align:top*/
+		margin-bottom: -5px;
+	}
+
+	img {
+		display: block;
+	}
+
+	.siliao {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 40px;
+		z-index: 100;
+	}
+
+	.songli {
+		width: 14px;
+		height: 15.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 160px;
+		z-index: 100;
+	}
+
+	.guanzhu {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15.5px;
+		left: 275px;
+		z-index: 100;
+	}
+
+	span {
+		color: #fff;
+		font-size: 14.5px;
+	}
+
+	.introduce {
+		background: #fff;
+		/*	height: 145px;*/
+		width: 94.67%;
+		margin: 0 auto;
+		margin-top: 12.5px;
+		border-radius: 4px;
+		padding-bottom: 10px;
+	}
+
+	.ziwojieshao {
+		width: 88%;
+		border-bottom: 0.5px solid #eaeaea;
+		margin: 0 auto;
+		height: 40px;
+		line-height: 40px;
+		color: #313131;
+		font-size: 15px;
+		padding-left: 5px;
+	}
+
+	.jieshao {
+		word-break: break-all;
+		padding: 0px 10px 0 10px;
+		letter-spacing: 2px;
+		line-height: 20px;
+		color: #848383;
+		box-sizing: border-box;
+		font-size: 15px;
+	}
+	/**/
+
+	#lianxi {
+		width: 94.67%;
+		height: 189.5px;
+		background: #fff;
+		margin: 10px auto 0;
+		border-radius: 4px;
+		/*position: relative;*/
+	}
+
+	.method {
+		height: 40px;
+		border-bottom: 0.5px solid #eaeaea;
+		width: 88%;
+		margin: 0 auto;
+		padding-left: 5.5px;
+		padding-top: 10.5px;
+		box-sizing: border-box;
+		font-size: 14.5px;
+		color: #313131;
+		font-weight: bold;
+	}
+
+	.detail_method {
+		width: 88%;
+		margin: 15.5px auto 0;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.detail_1 {
+		margin-left: 6px;
+		font-size: 14px;
+		color: #2e2e2e;
+	}
+
+	.detail_2 {
+		margin-right: 30px;
+		font-size: 14px;
+		color: #8e8e8e;
+		width: 140.5px;
+	}
+
+	.detail_foot {
+		margin: 18.5px 20px 0;
+		/*margin: 18.5px auto 0;*/
+		font-size: 14px;
+		color: #a0a0a0;
+	}
+
+	.pearson {
+		width: 94.67%;
+		height: 389.5px;
+		background: #fff;
+		margin: 22.5px auto 0;
+		border-radius: 4px;
+	}
+
+	.ID {
+		display: flex;
+		width: 88%;
+		margin: 0 auto;
+		justify-content: space-between;
+	}
+
+	.ID_detail1 {
+		margin: 15px 0 0 6.5px;
+		font-size: 14px;
+		color: #2e2e2e;
+	}
+
+	.ID_detail2 {
+		margin: 15px 37.5px 0 0;
+		color: #8e8e8e;
+		font-size: 14px;
+		width: 125.5px;
+	}
+
+	.footer {
+		/*height: 54.5px;*/
+		width: 100%;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	}
+
+	.beijing {
+		height: 100%;
+		width: 100%;
+		/*vertical-align:top*/
+		margin-bottom: -5px;
+	}
+
+	img {
+		display: block;
+	}
+
+	.siliao {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 40px;
+		z-index: 100;
+	}
+
+	.songli {
+		width: 14px;
+		height: 15.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 155px;
+		z-index: 100;
+	}
+
+	.guanzhu {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15.5px;
+		left: 267px;
+		z-index: 100;
+	}
+
+	span {
+		color: #fff;
+		font-size: 14.5px;
+	}
+
+	.introduce {
+		background: #fff;
+		/*	height: 145px;*/
+		width: 94.67%;
+		margin: 0 auto;
+		margin-top: 12.5px;
+		border-radius: 4px;
+	}
+
+	.ziwojieshao {
+		width: 88%;
+		border-bottom: 0.5px solid #eaeaea;
+		margin: 0 auto;
+		height: 40px;
+		line-height: 40px;
+		color: #313131;
+		font-size: 15px;
+		padding-left: 5px;
+	}
+
+	.jieshao {
+		word-break: break-all;
+		margin: 0 auto;
+		margin-top: 16px;
+		width: 318px;
+		color: #848383;
+		/*height: 88.5px;*/
+	}
+
+	.guodu {
+		position: fixed;
+		height: 20px;
+		width: 100%;
+		bottom: 49.5px;
+		/*border:1px solid red;*/
+		/* position: absolute; */
+		background: linear-gradient( bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+	}
+
+	.mubu {
+		width: 100%;
+		height: 100%;
+		background: black;
+		opacity: 0.2;
+		position: fixed;
+		bottom: 0;
+		z-index: 99;
+	}
+
+	.model {
+		width: 100%;
+		height: 385px;
+		background: #fff;
+		position: fixed;
+		bottom: 0;
+		z-index: 100;
+		.model_1 {
+			width: 88%;
+			height: 40px;
+			margin: 0 auto;
+			text-align: center;
+			border-bottom: 0.5px solid #eaeaea;
+			line-height: 40px;
+			font-size: 15px;
+			color: #313131;
+			letter-spacing: 2px;
+		}
+	}
+
+	.liwu {
+		width: 70px;
+		height: 97px;
+		margin: 13.5px 1px 1px 8.5px;
+		border: 1px solid #fff;
+		text-align: center;
+		overflow: hidden;
+		img {
+			width: 60px;
+			height: 60px;
+			margin: 10px auto 9px;
+		}
+		.liwu_font {
+			display: inline-block;
+			/*height: 13.5px;*/
+			font-size: 14px;
+			color: #2d2d2d;
+			margin: 0 auto;
+		}
+	}
+
+	.huizong {
+		width: 97%;
+		margin-left: 6.5px;
+		flex-wrap: wrap;
+		margin-top: 1.5px;
+		box-sizing: border-box;
+	}
+
+	.active {
+		border: 1px solid #fb7ba0;
+		border-radius: 4px;
+	}
+
+	.dian {
+		width: 50px;
+		height: 10px;
+		margin: 8.5px 0 0 165.5px;
+	}
+
+	.xuanze {
+		width: 88%;
+		display: flex;
+		justify-content: space-between;
+		margin: 20px auto;
+		border-top: 0.5px solid #eaeaea;
+	}
+
+	.xuanze_1 {
+		width: 44%;
+		text-align: center;
+		padding-top: 24.5px;
+		color: #ff7e30;
+		font-size: 17.5px;
+	}
+
+	.xuanze_2 {
+		width: 44%;
+		text-align: center;
+		padding-top: 24.5px;
+		font-size: 17.5px;
+		color: #8c8c8c;
+	}
+	/*banner 轮播图*/
+
+	.bigBox {
+		background-color: white;
+		width: 100%;
+	}
+
+	.mySwiperBox {
+		margin: 0px 15px 0px 15px;
+		box-sizing: border-box;
+		/deep/ .swiper-slide {
+			height: !important;
+		}
+	}
+
+	.swiperBox {
+		height: 260px;
+		.swiper-slide_item {
+			width: 100%;
+			height: 240px;
+			border-radius: 5px;
+			overflow: hidden;
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.imgBox {
+			width: 100%;
+			height: 240px;
+		}
+	}
+
+	.mySwiperBox /deep/ .swiper-pagination-bullet {
+		background: #E5E7EA!important;
+	}
+
+	.mySwiperBox /deep/ .swiper-pagination-bullet-active {
+		background: #FB7BA0!important;
+	}
+
+	.dnot {
+		margin-top: 10px;
+		bottom: 0px;
+	}
+	.dialog {
+		width: 100%;
+		height: 92.5%;
+		position: fixed;
+		background-color: rgba(0, 0, 0, 0.85);
+		left: 0;
+		top: 0;
+		z-index: 22;
+		img {
+			width: 308.5px;
+			height: 269px;
+			padding-left: 43.5px;
+			padding-top: 40px;
+			/*left: 43.5px;
+    	top: 52px;*/
+		}
+	}
+
+	.dialog_txt1 {
+		color: #FFFFFF;
+		font-size: 16.24px;
+		position: absolute;
+		left: 95px;
+		top: 335px;
+		letter-spacing: 2px;
+		font-weight: 100;
+	}
+
+	.dialog_txts1 {
+		color: #FFFFFF;
+		font-size: 16.24px;
+		position: absolute;
+		left: 34px;
+		top: 360px;
+		letter-spacing: 2px;
+		font-weight: 100;
+	}
+
+	.dialog_txt2 {
+		text-align: center;
+		color: #FED52F;
+		font-size: 14px;
+		position: absolute;
+		left: 55.5px;
+		top: 400px;
+		font-weight: 100;
+	}
+
+	.dialog_txt {
+		width: 210px;
+		height: 48px;
+		text-align: center;
+		line-height: 48px;
+		font-size: 19.18px;
+		border: 1px solid #FF9483;
+		color: #FF9483;
+		position: absolute;
+		left: 83px;
+		top: 450px;
+		border-radius: 50px;
+		font-weight: 100;
+		letter-spacing: 4px;
+	}
+
+	.dialog_txts {
+		position: absolute;
+		left: 117px;
+		top: 530px;
+		font-size: 19.18px;
+		color: #B3B3B3;
+		font-weight: 100;
+		letter-spacing: 4px;
+	}
+	.path {
+  /* border: 1px solid red; */
+  left: 0;
+  bottom: 50px;
+  width: 100%;
+  height: 30px;
+  /* position: absolute; */
+  position: fixed;
+  background: linear-gradient(
+    bottom,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0)
+  );
+}
+</style>
+=======
+<template>
+	<div id="detail">
+		<!--头部背景图片-->
+		<div class="header_picture" :style="{backgroundImage:'url('+userInfo.headPortrait+')'}"></div>
+		<!--后退前进-->
+		<img src="../../assets/icon_zuola@3x.png" alt class="houtui" @click="goBack" />
+
+		<img src="../../assets/3dian@3x.png" alt class="qianjin" @click="goNavAdd" />
+		<div class="jubao" v-show="!show">
+			<div @click="users_report(userInfo.username,userInfo.uid,userInfo.phone)">举报该用户</div>
+			<div style="border: none;">不让ta看我</div>
+		</div>
+		<!--照片-->
+		<img :src="userInfo.headPortrait" alt class="photo" />
+		<!--昵称-->
+		<div class="userBox">
+			<div id="" class="flex align-items-center">
+				<div class="nickname">{{userInfo.username}}</div>
+				<img v-show="userInfo.whetherAutonym==0" src="../../../static/img/shiming2.png" class="shiming" />
+				<img v-show="userInfo.whetherAutonym==1" src="../../assets/shiming@2x.png" class="shiming" />
+				<img v-show="userInfo.whetherVip==0" src="../../images/my/vip@3xv.png" class="vip" />
+				<img v-show="userInfo.whetherVip==1" src="../../assets/vip@3x.png" class="vip" />
+
+			</div>
+			<!--个人信息-->
+			<div class="peason">{{userInfo.age}}岁|{{userInfo.height}}厘米|{{userInfo.educationalStatus|educationalStatusFilters}}</div>
+
+		</div>
+		<!--用户状态-->
+		<div class="user_state">
+			<div class="state_1">
+				<img src="../../assets/icon_tixing@3x.png" />
+				<div class="state_1-1">上线提醒</div>
+			</div>
+			<div class style="width: 0.5px;height: 13px;color: #979797;"></div>
+			<div class="state_2" v-show="userInfo.whetherOnline==1">
+				<img src="../../assets/icon_zxian@3x.png" alt />
+				<div class="state_2-1">用户在线</div>
+			</div>
+		</div>
+		<!--靓照展示-->
+		<div class="liangzhao">
+			<img v-for="(item, index) in userInfo.albumList" :src="item" />
+			<!--<img src="../../../static/img/tx_wodetouxiang@2x.png" />
+			<img src="../../../static/img/tx_wodetouxiang@2x.png" />
+			<img src="../../../static/img/tx_wodetouxiang@2x.png" />
+			<img src="../../../static/img/tx_wodetouxiang@2x.png" />-->
+			<!--<h5 v-show="!userInfo.albumList.length" style="margin:0 auto;">暂无图片</h5>-->
+		</div>
+		<!--<div v-show="userInfo.albumList.length==0" class="text-center"><span>暂无相册</span></div>-->
+		<!--用户动态-->
+		<div class="dynamic">
+			<div class="dynamic_1">
+				<b>用户动态</b>
+			</div>
+			<div class="dynamic_2">
+				<div class="dynamic_2-1" v-for="item in currentState">
+					<span class="dynamic_2-1_1">{{item.state}}</span>
+					<span class="dynamic_2-1_2" @click="watch">点击查看</span>
+				</div>
+			</div>
+			<div class="report">认证和属地信息仅供参考，请谨慎交往；如发现与注册资料不符，请提高警惕。建议与活跃度较高用户发信，更易收到回信。</div>
+		</div>
+		<!--自我介绍-->
+		<person :userInfo="userInfo"></person>
+		<div class="footer">
+			<img src="../../assets/dibubeijing@3x.png" class="beijing" />
+			<img src="../../assets/icon_pl@3x.png" class="siliao" @click="siliao" />
+			<span style="position: fixed;bottom:15px;left: 62.5px;" @click="siliao">私聊</span>
+			<img src="../../assets/icon_shousuo2@2x.png" alt class="songli" @click="songli" />
+			<span style="position: fixed;bottom:15px;left:182px;" @click="songli">送礼</span>
+			<img src="../../assets/icon_guanzhu@3x.png" class="guanzhu" @click="guanzhu" />
+			<span style="position: fixed;bottom:15px;left: 305px;" @click="guanzhu">关注</span>
+		</div>
+		<!--底部透明层-->
+		<div class="guodu"></div>
+		<!--模态框-->
+		<div class="mubu" @click="isSongli" v-show="state"></div>
+		<div class="model" v-show="state">
+			<div class="model_1">赠送礼物</div>
+			<div class="huizong" style="display:flex;">
+				<swiper :options="swiperOption" class="swiper-wrap swiperBox" ref="mySwiper " v-if="banner.length!=0">
+					<swiper-slide class="swiper-slide_item" v-for="(item,index) in banner" :key="index">
+
+						<div class="liwu" v-for="(item,index) in list" @click="xuanzesongli(index)" :class="{'active':currentSort==index}">
+							<img src="../../assets/meigui99@4x.png" />
+							<div class="liwu_font">玫瑰99</div>
+						</div>
+
+					</swiper-slide>
+					<div class="swiper-pagination dnot" v-for="(item,index) in banner" :key="index" slot="pagination"></div>
+					
+				</swiper>
+
+				<!--<div class="liwu" v-for="(item,index) in list" @click="xuanzesongli(index)" :class="{'active':currentSort==index}">
+					<img src="../../assets/meigui99@4x.png" />
+					<div class="liwu_font">玫瑰99</div>
+				</div>
+				<img src="../../assets/3dian_da@3x.png" alt class="dian" />-->
+				<!--赠送取消-->
+				<div class="xuanze">
+					<div class="xuanze_1">确定</div>
+					<div class="xuanze_2" @click="state=false">取消</div>
+				</div>
+			</div>
+		</div>
+		<div class="dialog" v-show="!show">
+			<img src="../../../static/img/hyfl.png" alt="">
+			<div class="dialog_txt1"> 此功能为VIP会员特权</div>
+			<div class="dialog_txts1">给最新注册会员发信，更易收到回信</div>
+			<div class="dialog_txt2">会员尊享20多项特权，快速提高成功率</div>
+			<div class="dialog_txt">立即升级会员 </div>
+			<div class="dialog_txts" @click="store">暂不升级会员</div>
+		</div>
+		<div class="path"></div>
+	</div>
+</template>
+
+<script>
+	import axios from 'axios'
+	import qs from 'qs'
+	import details from "./details";
+	import {Toast} from "vant"
+	import person from "./components/person"
+	export default {
+		name: "detail",
+		components:{
+			person
+		},
+		data() {
+			return {
+				show: true,
+				showBackIcon: "true",
+				title: "",
+				rightTitle: "···",
+				currentSort: "",
+				arr: [{
+						num: 1,
+						id: 1
+					},
+					{
+						num: 2,
+						id: 2
+					},
+					{
+						num: 3,
+						id: 3
+					},
+					{
+						num: 4,
+						id: 4
+					},
+					{
+						num: 5,
+						id: 5
+					},
+					{
+						num: 6,
+						id: 6
+					},
+					{
+						num: 7,
+						id: 7
+					}
+				],
+				list: [1, 2, 3, 4, 5, 6],
+				currentState: [{
+					state: "在线状态"
+				}, {
+					state: "最近登录"
+				}, {
+					state: "登录次数"
+				}, {
+					state: "注册时间"
+				}, {
+					state: "IP所属地"
+				}, {
+					state: "手机属地"
+				}, ],
+				currentSort: "",
+				state: "",
+				userInfo: new Object,
+				detailimages: [{
+					image: 'https://upload.jianshu.io/users/upload_avatars/6519497/ab020fc6-26f6-4195-a543-db862b1fb4ca.jpeg?imageMogr2/auto-orient/strip|imageView2/1/w/90/h/90/format/webp'
+				}],
+				showBackIcon: 'false',
+				title: '升级会员',
+				banner: [{
+						image: '/static/img/banner2@2x.5288369.png'
+					},
+					{
+						image: '/static/img/banner2@2x.5288369.png'
+					},
+				],
+				imgIndex: 1,
+				swiperOption: {
+					//是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
+					notNextTick: true,
+					//循环
+					loop: false,
+					//设定初始化时slide的索引
+					initialSlide: 0,
+					//自动播放
+					autoplay: {
+						delay: 300,
+						stopOnLastSlide: false,
+						/* 触摸滑动后是否继续轮播 */
+						disableOnInteraction: true
+					},
+					//滑动速度
+					speed: 300,
+					//滑动方向
+					direction: "horizontal",
+					//小手掌抓取滑动
+					grabCursor: true,
+					on: {
+						//滑动之后回调函数
+						slideChangeTransitionStart: function() {
+							/* realIndex为滚动到当前的slide索引值 */
+							this.imgIndex = this.realIndex - 1;
+						},
+					},
+					//分页器设置
+					pagination: {
+						el: ".swiper-pagination",
+						clickable: true,
+						type: "bullets"
+					}
+				},
+				selectIndex: 0,
+				show:true,
+				
+			};
+		},
+	
+		mounted() {
+			
+			this.prefixResApi = this.resourcesApi;
+			 var ruid=this.$route.query.uid
+			 console.log(this.$route.query.uid)
+			this.getUserDetail(ruid);
+			//			var temp=[];
+			//			var arr2=['a','b','c','cd'];
+			//			for(var  i=0;i<arr2.length;i+=2){
+			//				temp.push(arr2.slice(i,i+2))
+			//			}
+			//			console.log(temp)
+		},
+		methods: {
+			//查看别人信息
+			getUserDetail(ruid) {
+				//console.log('sdjf');
+				var requestUrl = this.apiUrl + 'user/getUserDetail';
+				var requestData = {
+					type: 1,
+					uid: localStorage.getItem('uid'),
+					ruid
+				};
+				axios.post(requestUrl,
+						qs.stringify(requestData), {
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							}
+						},
+					).then((res) => {
+						console.log(res)
+						var resdata = res.data;
+						if(resdata.code == 200) {
+							resdata.data.headPortrait=this.prefixResApi+resdata.data.headPortrait
+							this.userInfo = resdata.data;
+							console.log(this.userInfo);
+						}
+					})
+					.catch((error) => {})
+			},
+			users_report(userName, userId, phone) {
+
+				this.$router.push({
+					path: '/users_report',
+					query: {
+						userName: userName,
+						uid: userId,
+						phone: phone
+					}
+				});
+			},
+			goBack() {
+				this.$router.go(-1);
+			},
+			goNavAdd() {
+				this.show = !this.show;
+			},
+			xuanzesongli(index) {
+				//alert(index)
+				this.currentSort = index;
+			},
+			isSongli() {
+				this.state = !this.state;
+			},
+			songli() {
+				this.state = true;
+			},
+			siliao() {},
+			guanzhu() {},
+			  store(){
+           	this.show=!this.show
+          },
+          watch(){
+          	if(!this.userInfo.whetherVip){
+          		this.show=false
+          	}else{
+          		Toast("请充值VIP，再来查看！")
+          	}
+          }
+		}
+	};
+</script>
+
+<style scoped="scoped" lang="scss">
+	@import url("../../styles/mycomstyle.css");
+	.jubao {
+		position: absolute;
+		left: 70%;
+		top: 8%;
+		width: 100px;
+		background: #a1a1a1;
+		border-radius: 8px;
+		div {
+			// width: 40px;
+			height: 30px;
+			border-bottom: 1px solid #ccc;
+			color: #fff;
+			text-align: center;
+			line-height: 30px;
+		}
+	}
+	
+	#detail {
+		/*position: relative;*/
+		background: #f1f1f1;
+		height: 100%;
+		/*height: 612.5px;*/
+		margin-bottom: 54.5px;
+	}
+	
+	.header_picture {
+		height: 111px;
+		width: 100%;
+		background-image: url(../../assets/zp_byz@3x.png);
+		/*background-position: 0px -10px;*/
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		filter: blur(5px);
+	}
+	
+	.houtui {
+		width: 10px;
+		height: 18px;
+		position: absolute;
+		top: 34.5px;
+		left: 26.5px;
+	}
+	
+	.qianjin {
+		width: 25px;
+		height: 5px;
+		position: absolute;
+		top: 34.5px;
+		left: 323px;
+	}
+	
+	.photo {
+		width: 80.5px;
+		height: 80.5px;
+		position: absolute;
+		top: 65px;
+		left: 26.5px;
+	}
+	
+	.userBox {
+		position: absolute;
+		top: 66.5px;
+		left: 119px;
+		.nickname {
+			color: #ffffff;
+			font-size: 15.5px;
+			max-width: 150px;
+			height: 14.5px;
+			overflow: hidden;
+			line-height: 14.5px;
+			margin-right: 5px;
+		}
+		.shiming {
+			width: 27.5px;
+			height: 16.5px;
+			margin-right: 5px;
+		}
+		.vip {
+			width: 27.5px;
+			height: 16.5px;
+		}
+		.peason {
+			/*width: 130px;*/
+			margin-top: 2px;
+			height: 13.5px;
+			color: #ffffff;
+			font-size: 13.5px;
+			letter-spacing: 1px;
+		}
+	}
+	
+	.user_state {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.state_1 {
+		margin-left: 119px;
+		margin-top: 7.5px;
+		background: #d8d8d8;
+		width: 84.5px;
+		height: 23px;
+		font-size: 13.5px;
+		color: #626262;
+		padding-bottom: 5px;
+		display: flex;
+		img {
+			width: 12px;
+			height: 12px;
+			margin-left: 6.5px;
+			margin-top: 8.5px;
+		}
+	}
+	
+	.state_1-1 {
+		width: 54px;
+		height: 12.5px;
+		margin-top: 5px;
+	}
+	
+	.state_2 {
+		margin-right: 63.5px;
+		margin-top: 10.5px;
+		color: #626262;
+		font-size: 13px;
+		display: flex;
+		img {
+			width: 13px;
+			height: 13px;
+			margin-top: 6.5px;
+		}
+	}
+	
+	.state_2-1 {
+		width: 54.5px;
+		height: 13px;
+		margin-top: 4.5px;
+		margin-left: 5.5px;
+	}
+	
+	.liangzhao {
+		margin-top: 11.5px;
+		display: flex;
+		overflow: hidden;
+		img {
+			width: 58px;
+			height: 58px;
+			margin-left: 7.5px;
+			border-radius: 3px;
+		}
+	}
+	
+	.liangzhao>img:first-child {
+		margin-left: 27.5px;
+	}
+	
+	.dynamic {
+		width: 94.67%;
+		margin: 0 auto;
+		background: #ffffff;
+		margin-top: 6.5px;
+		border-radius: 4px;
+		box-shadow: #202020;
+		padding-bottom: 15px;
+		.dynamic_1 {
+			width: 88%;
+			border-bottom: 0.5px solid #eaeaea;
+			margin: 0 auto;
+			height: 40px;
+			line-height: 40px;
+			color: #313131;
+			font-size: 15px;
+			padding-left: 5px;
+		}
+	}
+	
+	.dynamic_2 {
+		/*margin-top:15px;*/
+		display: flex;
+		flex-wrap: wrap;
+		.dynamic_2-1 {
+			width: 150px;
+			text-align: center;
+			max-width: 150px;
+			height: 33px;
+			line-height: 33px;
+			background: #ffefeb;
+			border-radius: 16.5pt;
+			margin-left: 13.5px;
+			font-size: 14px;
+			overflow: hidden;
+			margin-top: 15px;
+			.dynamic_2-1_1 {
+				width: 50px;
+				color: #363535;
+			}
+			.dynamic_2-1_2 {
+				display: inline-block;
+				margin-left: 10px;
+				color: #f22a59;
+			}
+		}
+	}
+	
+	.report {
+		width: 84.8%;
+		word-break: break-all;
+		margin: 0 auto;
+		font-size: 14px;
+		color: #A1A1A1;
+		margin-top: 22.5px;
+		font-size: 14px;
+	}
+	
+	.footer {
+		/*height: 54.5px;*/
+		width: 100%;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	}
+	
+	.beijing {
+		height: 100%;
+		width: 100%;
+		/*vertical-align:top*/
+		margin-bottom: -5px;
+	}
+	
+	img {
+		display: block;
+	}
+	
+	.siliao {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 40px;
+		z-index: 100;
+	}
+	
+	.songli {
+		width: 14px;
+		height: 15.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 160px;
+		z-index: 100;
+	}
+	
+	.guanzhu {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15.5px;
+		left: 275px;
+		z-index: 100;
+	}
+	
+	span {
+		color: #fff;
+		font-size: 14.5px;
+	}
+	
+	.introduce {
+		background: #fff;
+		/*	height: 145px;*/
+		width: 94.67%;
+		margin: 0 auto;
+		margin-top: 12.5px;
+		border-radius: 4px;
+		padding-bottom: 10px;
+	}
+	
+	.ziwojieshao {
+		width: 88%;
+		border-bottom: 0.5px solid #eaeaea;
+		margin: 0 auto;
+		height: 40px;
+		line-height: 40px;
+		color: #313131;
+		font-size: 15px;
+		padding-left: 5px;
+	}
+	
+	.jieshao {
+		word-break: break-all;
+		padding: 0px 10px 0 10px;
+		letter-spacing: 2px;
+		line-height: 20px;
+		color: #848383;
+		box-sizing: border-box;
+		font-size: 15px;
+	}
+	/**/
+	
+	#lianxi {
+		width: 94.67%;
+		height: 189.5px;
+		background: #fff;
+		margin: 10px auto 0;
+		border-radius: 4px;
+		/*position: relative;*/
+	}
+	
+	.method {
+		height: 40px;
+		border-bottom: 0.5px solid #eaeaea;
+		width: 88%;
+		margin: 0 auto;
+		padding-left: 5.5px;
+		padding-top: 10.5px;
+		box-sizing: border-box;
+		font-size: 14.5px;
+		color: #313131;
+		font-weight: bold;
+	}
+	
+	.detail_method {
+		width: 88%;
+		margin: 15.5px auto 0;
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.detail_1 {
+		margin-left: 6px;
+		font-size: 14px;
+		color: #2e2e2e;
+	}
+	
+	.detail_2 {
+		margin-right: 30px;
+		font-size: 14px;
+		color: #8e8e8e;
+		width: 140.5px;
+	}
+	
+	.detail_foot {
+		margin: 18.5px 20px 0;
+		/*margin: 18.5px auto 0;*/
+		font-size: 14px;
+		color: #a0a0a0;
+	}
+	
+	.pearson {
+		width: 94.67%;
+		height: 389.5px;
+		background: #fff;
+		margin: 22.5px auto 0;
+		border-radius: 4px;
+	}
+	
+	.ID {
+		display: flex;
+		width: 88%;
+		margin: 0 auto;
+		justify-content: space-between;
+	}
+	
+	.ID_detail1 {
+		margin: 15px 0 0 6.5px;
+		font-size: 14px;
+		color: #2e2e2e;
+	}
+	
+	.ID_detail2 {
+		margin: 15px 37.5px 0 0;
+		color: #8e8e8e;
+		font-size: 14px;
+		width: 125.5px;
+	}
+	
+	.footer {
+		/*height: 54.5px;*/
+		width: 100%;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	}
+	
+	.beijing {
+		height: 100%;
+		width: 100%;
+		/*vertical-align:top*/
+		margin-bottom: -5px;
+	}
+	
+	img {
+		display: block;
+	}
+	
+	.siliao {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 40px;
+		z-index: 100;
+	}
+	
+	.songli {
+		width: 14px;
+		height: 15.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15px;
+		left: 155px;
+		z-index: 100;
+	}
+	
+	.guanzhu {
+		width: 16.5px;
+		height: 14.5px;
+		display: inline-block;
+		position: fixed;
+		bottom: 15.5px;
+		left: 267px;
+		z-index: 100;
+	}
+	
+	span {
+		color: #fff;
+		font-size: 14.5px;
+	}
+	
+	.introduce {
+		background: #fff;
+		/*	height: 145px;*/
+		width: 94.67%;
+		margin: 0 auto;
+		margin-top: 12.5px;
+		border-radius: 4px;
+	}
+	
+	.ziwojieshao {
+		width: 88%;
+		border-bottom: 0.5px solid #eaeaea;
+		margin: 0 auto;
+		height: 40px;
+		line-height: 40px;
+		color: #313131;
+		font-size: 15px;
+		padding-left: 5px;
+	}
+	
+	.jieshao {
+		word-break: break-all;
+		margin: 0 auto;
+		margin-top: 16px;
+		width: 318px;
+		color: #848383;
+		/*height: 88.5px;*/
+	}
+	
+	.guodu {
+		position: fixed;
+		height: 20px;
+		width: 100%;
+		bottom: 49.5px;
+		/*border:1px solid red;*/
+		/* position: absolute; */
+		background: linear-gradient( bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+	}
+	
+	.mubu {
+		width: 100%;
+		height: 100%;
+		background: black;
+		opacity: 0.2;
+		position: fixed;
+		bottom: 0;
+		z-index: 99;
+	}
+	
+	.model {
+		width: 100%;
+		height: 385px;
+		background: #fff;
+		position: fixed;
+		bottom: 0;
+		z-index: 100;
+		.model_1 {
+			width: 88%;
+			height: 40px;
+			margin: 0 auto;
+			text-align: center;
+			border-bottom: 0.5px solid #eaeaea;
+			line-height: 40px;
+			font-size: 15px;
+			color: #313131;
+			letter-spacing: 2px;
+		}
+	}
+	
+	.liwu {
+		width: 70px;
+		height: 97px;
+		margin: 13.5px 1px 1px 8.5px;
+		border: 1px solid #fff;
+		text-align: center;
+		overflow: hidden;
+		img {
+			width: 60px;
+			height: 60px;
+			margin: 10px auto 9px;
+		}
+		.liwu_font {
+			display: inline-block;
+			/*height: 13.5px;*/
+			font-size: 14px;
+			color: #2d2d2d;
+			margin: 0 auto;
+		}
+	}
+	
+	.huizong {
+		width: 97%;
+		margin-left: 6.5px;
+		flex-wrap: wrap;
+		margin-top: 1.5px;
+		box-sizing: border-box;
+	}
+	
+	.active {
+		border: 1px solid #fb7ba0;
+		border-radius: 4px;
+	}
+	
+	.dian {
+		width: 50px;
+		height: 10px;
+		margin: 8.5px 0 0 165.5px;
+	}
+	
+	.xuanze {
+		width: 88%;
+		display: flex;
+		justify-content: space-between;
+		margin: 20px auto;
+		border-top: 0.5px solid #eaeaea;
+	}
+	
+	.xuanze_1 {
+		width: 44%;
+		text-align: center;
+		padding-top: 24.5px;
+		color: #ff7e30;
+		font-size: 17.5px;
+	}
+	
+	.xuanze_2 {
+		width: 44%;
+		text-align: center;
+		padding-top: 24.5px;
+		font-size: 17.5px;
+		color: #8c8c8c;
+	}
+	/*banner 轮播图*/
+	
+	.bigBox {
+		background-color: white;
+		width: 100%;
+	}
+	
+	.mySwiperBox {
+		margin: 0px 15px 0px 15px;
+		box-sizing: border-box;
+		/deep/ .swiper-slide {
+			height: !important;
+		}
+	}
+	
+	.swiperBox {
+		height: 260px;
+		.swiper-slide_item {
+			width: 100%;
+			height: 240px;
+			border-radius: 5px;
+			overflow: hidden;
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.imgBox {
+			width: 100%;
+			height: 240px;
+		}
+	}
+	
+	.mySwiperBox /deep/ .swiper-pagination-bullet {
+		background: #E5E7EA!important;
+	}
+	
+	.mySwiperBox /deep/ .swiper-pagination-bullet-active {
+		background: #FB7BA0!important;
+	}
+	
+	.dnot {
+		margin-top: 10px;
+		bottom: 0px;
+	}
+	.dialog {
+		width: 100%;
+		height: 92.5%;
+		position: fixed;
+		background-color: rgba(0, 0, 0, 0.85);
+		left: 0;
+		top: 0;
+		z-index: 22;
+		img {
+			width: 308.5px;
+			height: 269px;
+			padding-left: 43.5px;
+			padding-top: 40px;
+			/*left: 43.5px;
+    	top: 52px;*/
+		}
+	}
+	
+	.dialog_txt1 {
+		color: #FFFFFF;
+		font-size: 16.24px;
+		position: absolute;
+		left: 95px;
+		top: 335px;
+		letter-spacing: 2px;
+		font-weight: 100;
+	}
+	
+	.dialog_txts1 {
+		color: #FFFFFF;
+		font-size: 16.24px;
+		position: absolute;
+		left: 34px;
+		top: 360px;
+		letter-spacing: 2px;
+		font-weight: 100;
+	}
+	
+	.dialog_txt2 {
+		text-align: center;
+		color: #FED52F;
+		font-size: 14px;
+		position: absolute;
+		left: 55.5px;
+		top: 400px;
+		font-weight: 100;
+	}
+	
+	.dialog_txt {
+		width: 210px;
+		height: 48px;
+		text-align: center;
+		line-height: 48px;
+		font-size: 19.18px;
+		border: 1px solid #FF9483;
+		color: #FF9483;
+		position: absolute;
+		left: 83px;
+		top: 450px;
+		border-radius: 50px;
+		font-weight: 100;
+		letter-spacing: 4px;
+	}
+	
+	.dialog_txts {
+		position: absolute;
+		left: 117px;
+		top: 530px;
+		font-size: 19.18px;
+		color: #B3B3B3;
+		font-weight: 100;
+		letter-spacing: 4px;
+	}
+	.path {
+  /* border: 1px solid red; */
+  left: 0;
+  bottom: 50px;
+  width: 100%;
+  height: 30px;
+  /* position: absolute; */
+  position: fixed;
+  background: linear-gradient(
+    bottom,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0)
+  );
+}
+</style>>>>>>>> .r250

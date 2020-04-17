@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/yxyy/!svn/ver/1/config
+END
+dev.env.js
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/yxyy/!svn/ver/1/config/dev.env.js
+END
+index.js
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/yxyy/!svn/ver/1/config/index.js
+END
+prod.env.js
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/yxyy/!svn/ver/1/config/prod.env.js
+END

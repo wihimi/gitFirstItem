@@ -1,0 +1,35 @@
+.mySwiperBox {
+		margin: 64px 15px 20px 15px;
+		/deep/ .swiper-slide {
+			height: !important;
+		}
+	}
+	
+	.swiperBox {
+		height: 99px;
+		.swiper-slide_item {
+			width: 100%;
+			height: 74px;
+			border-radius: 5px;
+			overflow: hidden;
+			border: 0.5px dashed #BBBBBB;
+		}
+		.imgBox {
+			width: 100%;
+			height: 74px;
+		}
+	}
+	
+	.mySwiperBox /deep/ .swiper-pagination-bullet {
+		background: #D4D4D4!important;
+	}
+	
+	.mySwiperBox /deep/ .swiper-pagination-bullet-active {
+		background: #35824E!important;
+	}
+	
+	.dnot {
+		margin-top: 10px;
+		bottom: 0px;
+	}
+	

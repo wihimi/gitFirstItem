@@ -1,0 +1,418 @@
+<template>
+	<div id="result">
+
+		<!--搜索-->
+		<div class="search">
+			<img src="../../assets/icon_shousuo2@2x.png" />
+			<!--搜索输入框-->
+			<div class="search_value">
+				<input type="text" v-model="inputKeyWord" placeholder="请输入用户名或ID" @blur="blurInput" />
+			</div>
+		</div>
+		<!--搜索分类-->
+		<div class="search_content">
+			<div class="sousuo" @click="change(1)" :class="{'active':currentSort==1}">
+				搜索结果
+			</div>
+			<div class="lahei" @click="change(2)" :class="{'active':currentSort==2}">
+				拉黑列表
+			</div>
+		</div>
+		<!--对象表-->
+		<!--对象表-->
+		<div class="beautiful">
+			<div class="swiper" v-for="(item,index) in arr" @click="swithTab(index,item.uid)">
+				<!--左边图-->
+<<<<<<< .mine
+				<img :src="prefixResApi+item.headPortrait" />
+=======
+				<img :src="item.headPortrait" />
+>>>>>>> .r127
+				<!--右边文-->
+				<div class="swiper_right">
+					<div class="swiper_one">
+<<<<<<< .mine
+						<img class="relative" src="../../assets/paimingyouxian@3x.png" /> {{item.username}}
+=======
+						<img class="relative" v-show="item.whetherSortFirst" src="../../assets/paimingyouxian@3x.png" /> {{item.username}}
+>>>>>>> .r127
+						<div class="">
+<<<<<<< .mine
+							<img v-show="item.whetherVip==0" src="../../images/my/vip@3xv.png" />
+							<img v-show="item.whetherVip==1" src="../../assets/vip@3x.png" />
+
+							<img v-show="item.whetherAutonym==0" src="../../../static/img/shiming2.png" />
+							<img v-show="item.whetherAutonym==1" src="../../assets/shiming@2x.png" alt="" />
+=======
+							<img v-show="item.whetherVip" src="../../assets/vip@3x.png" />
+							<img v-show="!item.whetherVip"src="../../images/my/vip@3xv.png" />
+							<img v-show="item.whetherAutonym" src="../../assets/shiming@2x.png" alt="" />
+							<img v-show="!item.whetherAutonym" src="../../assets/shiming2.png" alt="" />
+>>>>>>> .r127
+						</div>
+					</div>
+					<div class="swiper_two">
+<<<<<<< .mine
+						{{item.age}}岁|{{item.height}}厘米|{{ item.educationalStatus | educationalStatusFilters }}
+=======
+						{{item.age}}岁|{{item.height}}厘米|{{item.educationalStatus|educationalStatusFilters}}
+>>>>>>> .r127
+					</div>
+					<div class="swiper_three">
+						<img src="../../../static/img/icon_siliao_da.png" class="img1" alt="" />
+						<span>私聊</span>
+						<img src="../../assets/icon_shongli@2x.png" class="img2" alt="" />
+						<span>送礼</span>
+						<img v-show="!item.followStatus" src="../../assets/icon_guanzhu@3x.png" class="img3" alt="" />
+						<img v-show="item.followStatus" src="../../assets/icon_guanzhu2@3x.png" class="img3" alt="" />
+						<span>关注</span>
+					</div>
+				</div>
+			</div>
+<<<<<<< .mine
+		</div>
+		<header-fixed-top @goBack="goBack" :showBack="showBackIcon" :topTitle="title" @goNavAdd="goNavAdd" :rightTitle="rightTitle"> </header-fixed-top>
+	</div>
+
+=======
+			
+
+   	</div>
+        <header-fixed-top @goBack="goBack" :showBack="showBackIcon" :topTitle="title" @goNavAdd="goNavAdd"  :rightTitle="rightTitle"> </header-fixed-top>
+    </div>
+    
+>>>>>>> .r127
+</template>
+
+<script>
+<<<<<<< .mine
+	import HeaderFixedTop from '../HeaderTop/HeaderFixedTop'
+	import axios from 'axios'
+	import qs from 'qs'
+	export default {
+		name: "result",
+		components: {
+=======
+import HeaderFixedTop from '../HeaderTop/HeaderFixedTop'
+import axios from "axios"
+import qs from "qs"
+
+    export default {
+    	name:"result",
+        components: {
+>>>>>>> .r127
+			HeaderFixedTop,
+
+<<<<<<< .mine
+		},
+		data() {
+			return {
+				showBackIcon: 'true',
+				title: '搜索结果',
+				rightTitle: '···',
+				currentSort: 1,
+				prefixResApi: '', //资源路径
+				arr: [],
+				selectByWhat: new Object,
+				inputKeyWord: ''
+			}
+		},
+		mounted() {
+			this.getSearchAll();
+
+		},
+		created() {
+			this.prefixResApi = this.resourcesApi;
+			this.selectByWhat = this.$route.query.searchData
+		},
+		methods: {
+			//获取所有搜索结果
+			getSearchAll() {
+				var requestUrl = this.apiUrl + 'user/getUserList';
+				var requestData = this.selectByWhat;
+				axios.post(requestUrl,
+						qs.stringify(requestData), {
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							}
+						},
+					).then((res) => {
+						var resdata = res.data;
+						if(resdata.code == 200) {
+							this.arr = resdata.data.list;
+						}
+					})
+					.catch((error) => {})
+			},
+			//返回
+			goBack() {
+				this.$router.go(-1);
+			},
+			//右上角三个点
+			goNavAdd() {
+				//                 this.$router.go(-1);
+			},
+			//选择选项卡
+			change(index) {
+				//alert(index)
+				this.currentSort = index
+			},
+			swithTab(index, uid) {
+				this.$router.push({
+					path: "/detail",
+					query: {
+						id: this.arr[index].id,
+						uid: uid
+					}
+				})
+			},
+			blurInput() {
+				console.log('是家电家具');
+			}
+		}
+	}
+=======
+        },
+        data(){
+            return{
+                showBackIcon: 'true',
+                title: '搜索结果',
+                rightTitle:'···',
+                currentSort:"1",
+               arr: [
+					
+				],
+            }
+        },
+        mounted(){
+          console.log(this.$route.query)
+          //请求搜索接口
+             var requestUrl = this.apiUrl + 'user/getUserList';
+//				
+//                 	area:this.$route.query.area,
+//					ageRange:this.$route.query.ageRange,
+//					heightRange:this.$route.query.heightRange,
+//					maritalStatus:this.$route.query.maritalStatus,
+//					educationalStatus:this.$route.query.educationalStatus,
+//					monthlyPay:this.$route.query.monthlyPay,
+//					haveHeadPortrait:this.$route.query.haveHeadPortrait
+//				};
+var requestData = {	};
+				axios.post(requestUrl,
+						qs.stringify(requestData), {
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded',
+//								token:localStorage.getItem("token")
+							}
+						},
+					).then((res) => {
+						console.log(res)
+						var resourcesApi=this.resourcesApi
+						var list=res.data.data.list
+						for(let i=0;i<list.length;i++){
+							list[i].headPortrait=resourcesApi+list[i].headPortrait
+						}
+						this.arr=list
+						console.log(this.arr)
+					})
+					.catch((error) => {
+						
+					})
+        },
+         methods: {
+             goBack() {
+                this.$router.go(-1);
+            },
+               goNavAdd(){
+                   this.$router.go(-1);
+               },
+           change(index){
+           	//alert(index)
+           	this.currentSort=index
+           },
+           toDetail(index){
+           	alert(index)
+           	this.$router.push({
+           		path:"/detail",
+           		query:{
+           			id:this.arr[index].id
+           		}
+           	})
+           }
+  }
+    }
+>>>>>>> .r127
+</script>
+
+<style lang="scss" scoped>
+<<<<<<< .mine
+	.van-nav-bar {
+		color: #fff
+	}
+	
+	.search {
+=======
+.van-nav-bar{
+    color: #fff
+}
+
+.search {
+>>>>>>> .r127
+		width: 345px;
+		height: 35px;
+		background: #DDDEE1;
+		margin: 0 auto;
+		display: flex;
+		border-radius: 20px;
+		margin-top: 60px;
+	}
+	
+	.search img {
+		width: 16px;
+		height: 16px;
+		margin-top: 10.5px;
+		margin-left: 13px;
+	}
+	
+	.search_content {
+		display: flex;
+		height: 41.5px;
+		line-height: 41.5px;
+		justify-content: space-between;
+	}
+	
+	.search_value input:focus {
+		text-decoration: none;
+		outline: none;
+	}
+	
+	.search_value input {
+		border: none;
+		background: #DDDEE1;
+	}
+	
+	.search_value {
+		margin-top: 6.5px;
+		margin-left: 8.5px;
+	}
+	
+	.sousuo {
+		color: #949494;
+		font-size: 14px;
+		margin-left: 94px;
+		width: 57px;
+		text-align: center;
+	}
+	
+	.lahei {
+		font-size: 14px;
+		color: #949494;
+		margin-right: 94.5px;
+		width: 57px;
+		text-align: center;
+	}
+	
+	.active {
+		border-bottom: 2.5px solid #F54663;
+		color: #f54663;
+	}
+	
+	.beautiful {
+		background: #F1F1F1;
+		/*position: fixed;*/
+		/*height:100% ;*/
+		width: 100%;
+		/*height: 420px;*/
+		border: 1px solid #F1F1F1;
+		margin-bottom: 49px;
+	}
+	
+	.swiper {
+		width: 355px;
+		height: 92.5px;
+		background: #FFFFFF;
+		border-radius: 4px;
+		margin: 0 auto;
+		margin-top: 12.5px;
+		position: relative;
+		/*box-shadow: 0px 0px 4px 2px #888888;*/
+	}
+	
+	.swiper>img {
+		width: 80.5px;
+		height: 80.5px;
+		margin: 6px 0 6px 6px;
+	}
+	
+	.swiper {
+		display: flex;
+	}
+	
+	.swiper_one {
+		font-size: 15.5px;
+		color: #202020;
+		margin-left: 16px;
+		font-weight: bold;
+		line-height: 16px;
+		display: flex;
+		padding-top: 8.5px;
+		height: 18px;
+		div {
+			transform: translateY(-6px);
+			margin-left: 2px
+		}
+	}
+	
+	.swiper_one img {
+		width: 28px;
+		height: 18px;
+		margin-left: 2px;
+		margin-top: 6.5px
+	}
+	
+	.swiper_two {
+		margin-left: 17px;
+		margin-top: 9.5px;
+		font-size: 13.97px;
+		color: #7F7F7F;
+		letter-spacing: 1px;
+	}
+	
+	.swiper_three {
+		height: 16px;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 15px;
+		.img1 {
+			width: 16px;
+			height: 16px;
+			margin-left: 16.5px;
+		}
+		.img2 {
+			width: 16px;
+			height: 16px;
+			margin-left: 47.5px;
+		}
+		.img3 {
+			width: 16px;
+			height: 16px;
+			margin-left: 49px;
+		}
+		span {
+			font-size: 11.5px;
+			color: #B6B6B6;
+			display: inline-block;
+			margin-left: 2.5px;
+			letter-spacing: 2px;
+			padding-bottom: 2px;
+		}
+	}
+	
+	.relative {
+		width: 80.5px!important;
+		height: 15px!important;
+		position: absolute;
+		top: 65.5px;
+		left: 5px;
+	}
+</style>

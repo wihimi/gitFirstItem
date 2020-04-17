@@ -1,0 +1,1021 @@
+<template>
+	<div id="search">
+		<!--<div class="bigBox">
+				<div id="" class="mySwiperBox">
+				<swiper :options="swiperOption" class="swiper-wrap swiperBox" ref="mySwiper " v-if="banner.length!=0">
+					<swiper-slide class="swiper-slide_item" v-for="(item,index) in banner" :key="index">
+						<img class="imgBox" :src="item.image" alt="" />
+					</swiper-slide>
+					<div class="swiper-pagination dnot" v-for="(item,index) in banner" :key="index" slot="pagination"></div>
+				</swiper>
+			</div>
+		</div>-->
+	
+		<div class="top">
+			<div class="test"></div>
+
+			<!--顶部轮播-->
+			
+			<!--<div class="lunbo">
+					<img src="/static/img/banner2@2x.5288369.png" alt="" />
+				<img src="../../assets/banner2@2x.png" alt="" />
+			</div>-->
+			<!--轮播图按钮-->
+			<!--<div class="lunbo_btn">
+				<img src="../../assets/icon_dian1.png" alt="" />
+			</div>-->
+			<!--搜索-->
+			<div class="search" >
+				<img src="../../assets/icon_shousuo2@2x.png" />
+				<!--搜索输入框-->
+				<div class="search_value">
+					<input type="text" placeholder="请输入用户名或ID" />
+				</div>
+			</div>
+			<!--类别搜索-->
+			<div class="category">
+<<<<<<< .mine
+				<div class="category_one" :class="selectIndex==index?'activeColor':''" v-for="(item,index) in msg" @click="changge(index)" >
+=======
+				<div class="category_one" :class="{'actives':currentSort==(index+1)}" v-for="(item,index) in msg" @click="changge(index)" >
+>>>>>>> .r127
+					{{item.name}}
+					<img v-show="selectIndex!=index" src="../../assets/icon_xiala.png" alt="" />
+						<img v-show="selectIndex==index" src="../../assets/icon_shangla.png" alt="" />
+				</div>
+				<!--搜索内容展示-->
+				<div class="content" v-show="state">
+					<!--类别一-->
+					<div class="fenge">
+						<div class="leibie" :class="leiBieIndex==-1?'leibie_active':''" @click="leiBieIndex=-1">全部</div>
+						<!--选择类别-->
+						<div class="quanbu">
+							<div class="lei" :class="index1==leiBieIndex?'leibie_active':''" v-for="(item,index1) in list" @click="clickClassOne(item,index1)">
+								{{item}}
+							</div>
+						</div>
+					</div>
+					<!--第二类-->
+					<div class="fenge" style="height: 140px;">
+
+						<div class="leibie_2" :class="leiBieIndex2==-1?'leibie_active':''" @click="leiBieIndex2=-1">
+							默认排序
+						</div>
+						<!--选择类别-->
+						<div class="quanbu" style="flex-wrap: wrap;">
+							<div class="lei_2"  :class="index==leiBieIndex2?'leibie_active':''" v-for="(item,index) in dataList" @click="clickClasstwo(item,index)">
+								{{item}}
+							</div>
+
+						</div>
+					</div>
+					<!--类别三-->
+					<div class="fenge">
+
+						<div class="leibie_3">
+							未联系过
+						</div>
+						<div class="paiming">
+							[申请排名优先，提高10倍收信]
+						</div>
+					</div>
+					<!--yes or not-->
+					<div class="deciside">
+						<div class="yes" @click="searchByChecked">
+							确定
+						</div>
+						<div class="not" @click="state=false" >
+							取消
+						</div>
+					</div>
+				</div>
+				<!--第二类内容-->
+				<div class="content_2" v-show="status">
+					<div class="content_child" v-for="(item,index) in data">
+						<div class="child_1" >
+							{{item.name}}
+						</div>
+						<div class="child_2" @click="location(index)">
+							<!--{{item.expression}}-->
+							<div :class="sexName[index]?'actionTitle':''" id="" style="display: inline;">{{sexName[index]?sexName[index]:'请选择'}}</div>
+							<img src="../../assets/icon_chela@3x.png" alt="" />
+						</div>
+
+					</div>
+					<!--确定取消-->
+					<div class="" style="display: flex;">
+						<div class="confirm" @click="changePath">
+							确定
+						</div>
+						<div class="cancel" @click="status=false">
+							取消
+						</div>
+					</div>
+					<!--底部弹出模态框-->
+	<van-popup v-model="showw" position="bottom" :style="{ height: '45%' }">
+			<van-picker :show-toolbar="true" :columns="columns"@change="onChange" @cancel="cancelCheckSex" @confirm="onConfirmCheckSex" />
+		</van-popup>
+				</div>
+			</div>
+		</div>
+		
+		<!--中部-->
+		<div class="mid">
+			<div class="mid_hengfu">
+				{{obj}}
+			</div>
+			<!--滑动信息-->
+			<div class="swiper" v-for="(item,index) in arr" @click="swithTab(index,item.uid)">
+				<!--左边图-->
+
+				<img :src="prefixResApi+item.headPortrait" />
+				<!--右边文-->
+				<div class="swiper_right">
+					<div class="swiper_one">
+						<img class="relative" src="../../assets/paimingyouxian@3x.png" /> {{item.username}}
+						<div class="">
+							<img v-show="item.whetherVip==0" src="../../images/my/vip@3xv.png" />
+							<img v-show="item.whetherVip==1" src="../../assets/vip@3x.png" />
+
+							<img v-show="item.whetherAutonym==0" src="../../../static/img/shiming2.png" />
+							<img v-show="item.whetherAutonym==1" src="../../assets/shiming@2x.png" alt="" />
+						</div>
+					</div>
+					<div class="swiper_two">
+						{{item.age}}岁|{{item.height}}厘米|{{ item.educationalStatus | educationalStatusFilters }}
+					</div>
+					<div class="swiper_three">
+						<img src="../../../static/img/icon_siliao_da.png" class="img1" alt="" />
+						<span>私聊</span>
+						<img src="../../assets/icon_shongli@2x.png" class="img2" alt="" />
+						<span>送礼</span>
+						<img src="../../assets/icon_guanzhu2@3x.png" class="img3" alt="" />
+						<span>关注</span>
+					</div>
+				</div>
+			</div>
+	<!--滑动信息-->
+			<div class="swiper" v-for="(item,index) in arr" @click="swithTab(index)">
+				<!--左边图-->
+
+				<img :src="prefixResApi+item.headPortrait" />
+				<!--右边文-->
+				<div class="swiper_right">
+					<div class="swiper_one">
+						<img class="relative" src="../../assets/paimingyouxian@3x.png" /> {{item.username}}
+						<div class="">
+							<img v-show="item.whetherVip==0" src="../../images/my/vip@3xv.png" />
+							<img v-show="item.whetherVip==1" src="../../assets/vip@3x.png" />
+
+							<img v-show="item.whetherAutonym==0" src="../../../static/img/shiming2.png" />
+							<img v-show="item.whetherAutonym==1" src="../../assets/shiming@2x.png" alt="" />
+						</div>
+					</div>
+					<div class="swiper_two">
+						{{item.age}}岁|{{item.height}}厘米|{{ item.educationalStatus | educationalStatusFilters }}
+					</div>
+					<div class="swiper_three">
+						<img src="../../../static/img/icon_siliao_da.png" class="img1" alt="" />
+						<span>私聊</span>
+						<img src="../../assets/icon_shongli@2x.png" class="img2" alt="" />
+						<span>送礼</span>
+						<img src="../../assets/icon_guanzhu2@3x.png" class="img3" alt="" />
+						<span>关注</span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</template>
+
+<script>
+	import axios from 'axios'
+	import qs from 'qs'
+	export default {
+		name: "search_value",
+		data() {
+			return {
+				columns: [
+//				'杭州', '宁波', '温州', '嘉兴', '湖州'
+				],
+				sexName: [],
+				showw:false,
+				detailimages: [{
+					image: 'https://upload.jianshu.io/users/upload_avatars/6519497/ab020fc6-26f6-4195-a543-db862b1fb4ca.jpeg?imageMogr2/auto-orient/strip|imageView2/1/w/90/h/90/format/webp'
+				}],
+				showBackIcon: 'false',
+				title: '升级会员',
+				banner: [{
+						image: '/static/img/banner2@2x.5288369.png'
+					},
+					{
+						image: '/static/img/banner2@2x.5288369.png'
+					},
+				],
+				imgIndex: 1,
+				swiperOption: {
+					//是一个组件自有属性，如果notNextTick设置为true，组件则不会通过NextTick来实例化swiper，也就意味着你可以在第一时间获取到swiper对象，假如你需要刚加载遍使用获取swiper对象来做什么事，那么这个属性一定要是true
+					notNextTick: true,
+					//循环
+					loop: true,
+					//设定初始化时slide的索引
+					initialSlide: 0,
+					//自动播放
+					autoplay: {
+						delay: 3000,
+						stopOnLastSlide: false,
+						/* 触摸滑动后是否继续轮播 */
+						disableOnInteraction: true
+					},
+					//滑动速度
+					speed: 3000,
+					//滑动方向
+					direction: "horizontal",
+					//小手掌抓取滑动
+					grabCursor: true,
+					on: {
+						//滑动之后回调函数
+						slideChangeTransitionStart: function() {
+							/* realIndex为滚动到当前的slide索引值 */
+							this.imgIndex = this.realIndex - 1;
+						},
+					},
+					//分页器设置
+					pagination: {
+						el: ".swiper-pagination",
+						clickable: true,
+						type: "bullets"
+					}
+				},
+				selectIndex:null,
+				imgUrl: '../../assets/paimingyouxian@3x.png',
+				prefixResApi: '',
+				msg: [{
+						name: "会员搜索"
+					},
+					{
+						name: "基础搜索"
+					},
+					{
+						name: "高级搜索"
+					}
+				],
+				obj: '升级vip可查看更多状态,点我查看会员详情',
+				arr: [],
+				list: [
+					"VIP", "未婚", "离异", "丧偶"
+				],
+				dataList: [
+					"最新注册", "最新登录", "在线会员", "实名会员", "照片最多", "资料最全"
+				],
+				state: false,
+				status: false,
+				currentSort: 4,
+				show: false,
+				data: [{
+						name: "所在地",
+						expression: "广东深圳",
+						sexName:""
+					},
+					{
+						name: "年龄",
+						expression: "不限",
+						sexName:""
+					},
+					{
+						name: "身高",
+						expression: "145-210厘米",
+						sexName:""
+					},
+					{
+						name: "婚姻状况",
+						expression: "不限",
+						sexName:""
+					},
+					{
+						name: "学历",
+						expression: "大专",
+						sexName:""
+					},
+					{
+						name: "月收入",
+						expression: "不限",
+						sexName:""
+					},
+					{
+						name: "头像",
+						expression: "有",
+						sexName:""
+					},
+				],
+				leiBieIndex:-1,
+				leiBieIndex2:-1,
+				index:"",
+
+
+			}
+		},
+		mounted() {
+			this.getSearchAll();
+			this.sexName.length=this.data.length
+
+		},
+		created() {
+			this.prefixResApi = this.resourcesApi;
+			console.log(this.prefixResApi)
+		},
+		methods: {
+			//选择确定
+			onConfirmCheckSex(value){
+				var sexName=this.sexName
+				for(let i=0;i<sexName.length;i++){
+					if(i==this.index){
+						sexName[i]=value
+					}
+				}
+				console.log(sexName)
+				this.sexName=sexName
+			    this.showw=!this.showw
+			},
+			//选择取消
+			cancelCheckSex(value){
+				console.log(value)
+				this.showw=!this.showw
+			},
+			//change事件
+			 onChange(picker, values) {
+//              picker.setColumnValues(1, citys[values[0]]);
+            },
+//			所在地的点击事件
+			location(index){
+				//alert(index)
+				this.index=index
+				var arr=[]
+				if(index==0){
+					 //请求地址接口
+			   var requestUrl = this.apiUrl + 'user/getAreaList';
+				var requestData = {	
+                    pid:0
+				};
+				axios.post(requestUrl,
+						qs.stringify(requestData), {
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							}
+						},
+					).then((res) => {
+						console.log(res.data.data)
+						var resdata=res.data;
+						if(resdata.code==200){
+							var arr=[]
+							arr.length=res.data.data.length
+							for(let i=0;i<arr.length;i++){
+								arr[i]=res.data.data[i].areaName
+							}
+							this.columns=arr
+						}
+						else{
+							this.$toast(resdata.msg)
+						}
+					})
+					.catch((error) => {
+						
+					})
+//					this.columns
+				}else if(index==1){
+					//年龄数组
+                var span = 10;
+				var tempItem = '';
+				var temp = [];
+				for(var i = 5; i < 80; i += span) {
+					tempItem = i + '—' + (i + span);
+					temp.push(tempItem);
+				}
+				//console.log(temp)
+				this.columns=temp
+					//赋值年龄数组
+				}else if(index==2){
+				var span = 10;
+				var tempItem = '';
+				var temp = [];
+				for(var i = 140; i < 260; i += span) {
+					tempItem = i;
+					temp.push(tempItem);
+				}
+				this.columns=temp
+				//console.log(temp)
+					//赋值身高数组
+				}else if(index==3){
+					arr=['未婚', '离异', '丧偶']
+					//赋值婚姻数组
+					this.columns=arr
+					
+				}else if(index==4){
+					arr=['无', '初中', '中专/职校/技校', '高中', '大专', '本科', '双学士', '硕士', '博士', '博士后']
+					//学历数组
+					this.columns=arr
+				}else if(index==5){
+					arr=['保密', '6000元以下', '6000-12000元', '12000-20000元', '20000元以上']
+					//赋值月收入数组
+					this.columns=arr
+				}else{
+					arr=['有','无']
+					//赋值头像数组
+					this.columns=arr
+				}
+				this.showw=true;
+			},
+			//选择分类
+			searchByChecked(){
+				var searchData={
+						userStatus:this.leiBieIndex+1,
+						sortType:this.leiBieIndex2+1
+				}
+				this.$router.push({
+					path: '/result',
+					query:{
+						searchData:searchData
+					}
+					});
+			},
+			//选择分类
+			clickClassOne(item,index){
+				this.leiBieIndex=index;
+			},
+			//选择
+			clickClasstwo(item,index){
+				this.leiBieIndex2=index;
+			},
+			//获取所有搜索结果
+			getSearchAll() {
+				var requestUrl = this.apiUrl + 'user/getUserList';
+				var requestData = {};
+				axios.post(requestUrl,
+						qs.stringify(requestData), {
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded'
+							}
+						},
+					).then((res) => {
+						var resdata = res.data;
+						if(resdata.code == 200) {
+							this.arr = resdata.data.list;
+							this.state=false;
+							console.log(this.arr)
+						}
+					})
+					.catch((error) => {})
+			},
+
+			changge(index) {
+				this.selectIndex=index;
+				if(index == 0) {
+					this.state = !this.state
+					if(this.status) {
+						this.status = false
+					}
+					console.log(index)
+				} else if(index == 1) {
+					this.status = !this.status
+					if(this.state) {
+						this.state = false
+					}
+				} else {
+
+				}
+                 
+				this.currentSort = index+1
+//				 alert(this.currentSort)
+				 if(!this.status&&!this.state){
+                      this.currentSort=0
+                  }
+			},
+			changePath() {
+				var sexName=this.sexName
+				this.$router.push({
+				path:'/result',
+				query:{
+					area:sexName[0]?sexName[0]:"",
+					ageRange:sexName[1]?sexName[1]:"",
+					heightRange:sexName[2]?sexName[2]:"",
+					maritalStatus:sexName[3]?sexName[3]:"",
+					educationalStatus:sexName[4]?sexName[4]:"",
+					monthlyPay:sexName[5]?sexName[5]:"",
+					haveHeadPortrait:sexName[6]==="有"?1:0
+				}
+			})
+			},
+			swithTab(index,uid) {
+				console.log(uid) 
+					console.log(index) 
+				this.$router.push({
+					path: "/detail",
+					query: {
+						id: this.arr[index].id,
+						uid:uid
+					}
+				})
+			}
+		},
+		// 声明一个本地的过滤器
+		　　filters: {　　　　
+			educationalStatusFilters: function(value) {
+				switch(value) {
+					case 0:
+						return "无"
+						break;
+					case 1:
+						return "初中"
+						break;
+					case 2:
+						return "中专/职校/技校"
+						break;
+					case 3:
+						return "高中"
+						break;
+
+					case 4:
+						return "大专"
+						break;
+
+					case 5:
+						return "本科"
+						break;
+
+					case 6:
+						return "双学士"
+						break;
+
+					case 7:
+						return "硕士"
+						break;
+
+					case 8:
+						return "博士"
+						break;
+					case 9:
+						return "博士后"
+						break;
+
+				}
+				console.log(value)　　　
+			}
+		}
+	}
+</script>
+
+<style scoped="scoped" lang="scss">
+/*@import url("../../styles/swipterBanner.css");*/
+
+	$color:white;
+		.actionTitle {
+		color: #3A3A3A;
+	}
+	#search{
+		width: 100%;
+		/*height: 100%;*/
+		background: #F1F1F1;
+		position: fixed;
+	}
+	.active {
+		color: red!important;
+	}
+	.actives{
+	color: red!important;
+	}
+	
+	.top {
+		width: 100%;
+		padding-bottom:10px ;
+		/*height: 175px;*/
+		background: $color;
+		border-bottom: $color;
+	}
+	
+	.lunbo {
+		width: 345px;
+		height: 70px;
+		margin: 0 auto;
+	}
+	
+	.lunbo img {
+		width: 100%;
+		height: 70px;
+	}
+	
+	.lunbo_btn {
+		width: 80px;
+		margin: 0 auto;
+	}
+	
+	.lunbo_btn img {
+		width: 42px;
+		height: 8px;
+	
+	}
+	
+	.search {
+		width: 345px;
+		height: 35px;
+		background: #DDDEE1;
+		margin: 0 auto;
+		display: flex;
+		border-radius: 20px;
+	}
+	
+	.search img {
+		width: 16px;
+		height: 16px;
+		margin-top: 10.5px;
+		margin-left: 13px;
+	}
+	
+	.search_value input:focus {
+		text-decoration: none;
+		outline: none;
+	}
+	
+	.search_value input {
+		border: none;
+		background: #DDDEE1;
+	}
+	
+	.search_value {
+		margin-top: 6.5px;
+		margin-left: 8.5px;
+	}
+	
+	.category {
+		display: flex;
+		position: relative;
+	}
+	
+	.activeColor{
+		color: #f54663!important;
+	}
+	.content {
+		width: 100%;
+		height: 436px;
+		background: white;
+		position: absolute;
+		top: 46px;
+		z-index: 100;
+	}
+	
+	.fenge {
+		width: 350px;
+		margin: 0 auto;
+		height: 93.5px;
+		border-bottom: 1px solid #EBEBEB;
+	}
+	
+	.leibie {
+	background: #EDEDED; 	
+		color: #838383;
+		height: 30px;
+		width: 80px;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 15px;
+		/*margin-left:12.5px;*/
+		margin-top: 15px;
+		font-size: 14px;
+	}
+	.leibie_active{
+		color: #FFFFFF!important;
+		background: #FB7BA0!important;
+	}
+	
+	.leibie_2 {
+	background: #EDEDED; 	
+		height: 30px;
+		width: 110px;
+		color: #838383;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 15px;
+		/*margin-left:12.5px;*/
+		margin-top: 15px;
+		font-size: 14px;
+	}
+	
+	.leibie_3 {
+		width: 108px;
+		height: 30px;
+		color: #FB7BA0;
+		font-size: 14px;
+		border: 1px solid #FB7BA0;
+		border-radius: 15px;
+		text-align: center;
+		line-height: 30px;
+		margin-top: 15px;
+		/*margin-left:12.5px;*/
+		letter-spacing: 1px;
+	}
+	
+	.quanbu {
+		display: flex;
+		transform: translateX(-12.5px);
+		/*border:1px solid red;*/
+		width: 362.5px;
+	}
+	
+	.lei {
+		background: #EDEDED;
+		height: 30px;
+		width: 80px;
+		color: #838383;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 15px;
+		margin-left: 10px;
+		margin-top: 15px;
+		font-size: 14px;
+	}
+	.quanbu .lei_2:first-child{
+	     margin-left: 12.5px!important;
+	}
+	
+	.lei_2 {
+		background: #EDEDED;
+		height: 30px;
+		width: 110px;
+		color: #838383;
+		line-height: 30px;
+		text-align: center;
+		border-radius: 15px;
+		margin-left: 10px;
+		margin-top: 15px;
+		font-size: 14px;
+		box-sizing: border-box;
+	}
+	
+	.paiming {
+		width: 210.5px;
+		height: 13.5px;
+		font-size: 14px;
+		color: #FB7BA0;
+		/*margin-left:14px;*/
+		margin-top: 20px;
+		letter-spacing: 1px;
+	}
+	
+	.deciside {
+		display: flex;
+	}
+	
+	.yes {
+		height: 42.5px;
+		width: 142.5px;
+		height: 42.5px;
+		font-size: 16.5px;
+		color: #fff;
+		background: #FB7BA0;
+		text-align: center;
+		line-height: 42.5px;
+		border-radius: 6px;
+		margin-left: 36.5px;
+		margin-top: 12.5px
+	}
+	
+	.not {
+		height: 42.5px;
+		width: 142.5px;
+		height: 42.5px;
+		font-size: 16.5px;
+		color: #5F5F5F;
+		background: #DDDDDD;
+		text-align: center;
+		line-height: 42.5px;
+		border-radius: 6px;
+		margin-left: 36.5px;
+		margin-top: 12.5px
+	}
+	
+	.content_2 {
+		width: 100%;
+		height: 410.5px;
+		background: white;
+		position: absolute;
+		top: 46px;
+		z-index: 100;
+	}
+	
+	.content_child {
+		width: 350px;
+		height: 48.5px;
+		border-bottom: 1px solid #EBEBEB;
+		display: flex;
+		justify-content: space-between;
+		font-size: 14.5px;
+		color: #444446;
+		margin: 0 auto;
+		line-height: 48.5px;
+	}
+	
+	.child_1 {
+		margin-left: 32.5px;
+	}
+	
+	.child_2 {
+		margin-right: 20px;
+		color: #999999;
+		img {
+			width: 7px;
+			height: 12px;
+			margin-left: 11px;
+		}
+	}
+	
+	.confirm {
+		width: 145px;
+		height: 45px;
+		border-radius: 6px;
+		background: #FB7BA0;
+		font-size: 16.5px;
+		line-height: 45px;
+		text-align: center;
+		color: #FFFFFF;
+		margin-left: 35.5px;
+		margin-top: 11.5px;
+	}
+	
+	.cancel {
+		width: 145px;
+		height: 45px;
+		border-radius: 6px;
+		background: #DDDDDD;
+		font-size: 16.5px;
+		line-height: 45px;
+		text-align: center;
+		color: #5F5F5F;
+		margin-left: 15px;
+		margin-top: 11.5px;
+	}
+	
+	.category_one {
+		margin-left: 31.5px;
+		font-size: 15.5px;
+		color: #444446;
+		margin-top: 14px;
+	}
+	
+	.category_one .active {
+		color: red;
+	}
+	
+	.mid {
+		/*background: #F1F1F1;*/
+		 /*width: 100%;*/
+		height: 100%;
+		border: 1px solid #F1F1F1;
+		margin-bottom: 49px;
+	}
+	
+	.mid_hengfu {
+		width: 297.5px;
+		height: 26px;
+		font-size: 13.5px;
+		color: #FFFFFF;
+		background: #C3C5C7;
+		margin: 0 auto;
+		line-height: 26px;
+		margin-top: 11px;
+		padding-left: 7px;
+		box-sizing: border-box;
+		letter-spacing: 1px;
+		border-radius: 5px;
+	}
+	
+	.swiper {
+		width: 355px;
+		height: 92.5px;
+		background: #FFFFFF;
+		border-radius: 4px;
+		margin: 0 auto;
+		margin-top: 10.5px;
+		position: relative;
+	}
+	
+	.swiper>img {
+		width: 80.5px;
+		height: 80.5px;
+		margin: 6px 0 6px 6px;
+	}
+	
+	.swiper {
+		display: flex;
+	}
+	
+	.swiper_one {
+		font-size: 15.5px;
+		color: #202020;
+		margin-left: 16px;
+		font-weight: bold;
+		line-height: 16px;
+		display: flex;
+		padding-top: 8.5px;
+		height: 18px;
+		div {
+			transform: translateY(-6px);
+			margin-left: 2px
+		}
+	}
+	
+	.swiper_one img {
+		width: 28px;
+		height: 18px;
+		margin-left: 2px;
+		margin-top: 6.5px
+	}
+	
+	.swiper_two {
+		margin-left: 17px;
+		margin-top: 9.5px;
+		font-size: 13.97px;
+		color: #7F7F7F;
+		letter-spacing: 1px;
+	}
+	
+	.swiper_three {
+		height: 16px;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 15px;
+		.img1 {
+			width: 16px;
+			height: 16px;
+			margin-left: 16.5px;
+		}
+		.img2 {
+			width: 16px;
+			height: 16px;
+			margin-left: 47.5px;
+		}
+		.img3 {
+			width: 16px;
+			height: 16px;
+			margin-left: 49px;
+		}
+		span {
+			font-size: 11.5px;
+			color: #FB7BA0;
+			display: inline-block;
+			margin-left: 2.5px;
+			letter-spacing: 2px;
+			padding-bottom: 2px;
+		}
+	}
+	
+	.relative {
+		width: 80.5px!important;
+		height: 15px!important;
+		position: absolute;
+		top: 65.5px;
+		left: 5px;
+	}
+	/*banner 轮播图*/
+	.bigBox{
+	background-color: white;
+		width: 100%;
+	}
+	.mySwiperBox {
+		
+		
+		margin: 0px 15px 0px 15px;
+		box-sizing: border-box;
+		/deep/ .swiper-slide {
+			height: !important;
+		}
+	}
+	
+	.swiperBox {
+		height: 99px;
+		.swiper-slide_item {
+			width: 100%;
+			height: 74px;
+			border-radius: 5px;
+			overflow: hidden;
+			border: 0.5px dashed #BBBBBB;
+		}
+		.imgBox {
+			width: 100%;
+			height: 74px;
+		}
+	}
+	
+	.mySwiperBox /deep/ .swiper-pagination-bullet {
+		background: #C3D8EA!important;
+	}
+	
+	.mySwiperBox /deep/ .swiper-pagination-bullet-active {
+		background: #F54663!important;
+	}
+	
+	.dnot {
+		margin-top: 10px;
+		bottom: 0px;
+	}
+</style>

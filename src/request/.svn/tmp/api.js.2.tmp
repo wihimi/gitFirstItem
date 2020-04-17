@@ -1,0 +1,13 @@
+import { get, post } from './http'
+export const apiAddress = p => post('user/getMatchingUserList', p);
+export const login = p => post('user/login', p);
+export const getPostList = p => post('post/getPostList', p); //发帖接口
+export const getUserList = p => post('user/getUserList', p);//搜索接口
+<<<<<<< .mine
+
+  =======
+export const addFollow = p => post('user/addFollow', p);//关注接口
+export const getGiftList = p => post('user/getGiftList', p);//送礼接口
+export const addRemind = p => post('user/addRemind', p);//添加上线提醒接口
+export const delRemind = p => post('user/delRemind', p);//取消上线提醒接口
+>>>>>>> .r312

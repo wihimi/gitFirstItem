@@ -1,0 +1,443 @@
+<template>
+	<div id="encounter">
+		<!--顶部通知-->
+		<div class="header">
+			<!--消息容器-->
+			<div class="header_msg">
+				{{msg}}
+			</div>
+			<!--图片容器-->
+			<div class="contailer_img">
+				<img src="../../assets/icon_faxian.png" alt="" />
+			</div>
+		</div>
+		<!--中部轮播-->
+		<div class="swiper">
+			<img src="../../assets/banner2@2x.png" />
+		</div>
+		<!--轮播按钮-->
+		<div class="lunbo_btn">
+			<div class="btn_1">
+
+			</div>
+			<div class="btn_2">
+
+			</div>
+			<div class="btn_3">
+
+			</div>
+		</div>
+		<!--后宫选妃-->
+		<div class="all_photo">
+
+			<div class="photo">
+				<img src="../../assets/zp@2x.png" alt="" />
+				<div class="photo_jieshao">
+					<h1>{{info.name}}</h1>
+					<div class="infomation">
+						{{info.age}}|{{info.height}}|{{info.education}}
+					</div>
+				</div>
+			</div>
+			<!--重叠相片-->
+			<div class="photo_chongdie"></div>
+			<div class="photo_chongdies"></div>
+
+		</div>
+		<!--模态框-->
+		<div class="container_model" v-show="is_show">
+
+		</div>
+		<!--内容-->
+		<div class="container" v-show="show">
+			<img class="coupon1" src="../../assets/tanchuang.png" alt="" />
+			<img class="coupon2" src="../../assets/but_massjvip@3x.png" alt="" />
+			<img class="coupon3" src="../../assets/icon_xing_2@2x.png" alt="" @click="hidden" />
+		</div>
+		<!---->
+		<div class="Safety_knowledge" v-show="showornot">
+			<h2 class="knowledge_title">安全小常识</h2>
+			<img class="knowledge" src="../../assets/bg_jx@2x.png" alt="" />
+			<img class="knowledge_2" src="../../assets/btn_wzdl@2x.png" alt="" />
+			<img class="off" src="../../assets/icon_faxian.png" alt="" @click="close" />
+			<!--安全类项-->
+			<div class="know_class">
+				<div class="Safety" v-for="item in arr">
+					{{item}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+	import axios from 'axios'
+	import qs from 'qs'
+	export default {
+		name: "encounter",
+		data() {
+			return {
+				msg: "樱花四散    33岁  ，刚刚上线，看去看看吧~",
+				info: {
+					name: "春田花花菜",
+					age: '41岁',
+					height: '163厘米',
+					education: '初中'
+				},
+				show: true, //控制优惠券显示
+				is_show: true, //控制模态框显示
+				showornot: false, //控制安全常识显示
+				arr: [
+					"1.不要刚发信就交换联系方式，至少要在站内有一定了解后。",
+					"2.认识时间少于10天、没有视频或通过电话的，不要急于见面。",
+					"3.认识时间少于30天、没有视频或通过电话的，不要异地见面。",
+					"4.凡是找各种理由要钱、要红包、要物的，百分百是骗子或托。",
+					"5.无情感交流、而是叫你做其他不相干的，一般都是有问题的。"
+				],
+<<<<<<< .mine
+				userId: "",
+				sex: ""
+=======
+				userId:"",
+				
+>>>>>>> .r127
+			}
+		},
+<<<<<<< .mine
+		created() {
+
+		},
+		mounted() {
+			if(!localStorage.getItem('token')) {
+				this.$router.push({
+					path: '/Login',
+				});
+			} else {
+				var requestUrl = this.apiUrl + 'post/getPostDetail ';
+=======
+		mounted(){
+		  	var requestUrl = this.apiUrl + 'user/getMatchingUserList';
+>>>>>>> .r127
+				var requestData = {
+<<<<<<< .mine
+					pid: 1,
+					ruid: localStorage.getItem("uid")
+				}
+
+				//			uid:localStorage.getItem("uid"),
+				//			ruid:localStorage.getItem("uid"),
+				//			pid:1
+
+				//				uid:localStorage.getItem("uid"),
+				//				gid:1,
+				//				ruid:localStorage.getItem("uid"),
+				//					type:2,
+				//					ruid:localStorage.getItem("uid")
+				//				    uid:localStorage.getItem("uid"),
+				//				     sex:1
+
+				//                    uid:localStorage.getItem("uid"),
+				//                    type:1
+
+				//                    getGiftList:1 
+
+				//                    uid:localStorage.getItem("uid"),
+				//                    ruid:localStorage.getItem("uid"),
+				//                    gid:1
+
+				//                    type:1,
+				//                    owner:true
+
+				//                    ruid:localStorage.getItem("uid"),
+				//                    category:2
+
+			};
+			axios.post(requestUrl,
+					qs.stringify(requestData), {
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded',
+							token: localStorage.getItem("token")
+						}
+					},
+				).then(res => {
+					console.log(res);
+
+				})
+				.catch((error) => {})
+=======
+				    uid:localStorage.getItem("uid"),
+				     sex:1
+                       
+				};
+				axios.post(requestUrl,  
+						qs.stringify(requestData), {
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded',
+								 token:localStorage.getItem("token")
+							}
+						},
+					).then(res => {
+						console.log(res);
+					
+						
+			       
+					})
+					.catch((error) => {})
+>>>>>>> .r127
+		},
+		methods: {
+			hidden() {
+				this.show = !this.show
+				this.is_show = !this.is_show
+			},
+			close() {
+				this.is_show = !this.is_show
+				this.showornot = !this.showornot
+			}
+		}
+	}
+</script>
+
+<style scoped="scoped">
+	#encounter {
+		background: linear-gradient(to top, #FFE7EB, #E3F5FF);
+		height: 618px;
+		/*height:100%;
+width:100%;
+overflow: hidden;
+background-size:cover;*/
+		/*height: 100%;*/
+		/*margin-top:23.5px;*/
+	}
+	
+	.header {
+		background: #FEA557;
+		font-size: 13px;
+		color: #FFFFFF;
+		height: 30px;
+		width: 90%;
+		display: flex;
+		justify-content: space-between;
+		border-radius: 5px;
+		margin: 0 auto;
+	}
+	
+	.header_msg {
+		line-height: 30px;
+		margin-left: 9px;
+	}
+	
+	.contailer_img {
+		width: 20px;
+		height: 20px;
+		margin-top: 5.5px;
+		margin-right: 4px;
+		border: 1px dotted #888
+	}
+	
+	.contailer_img>img {
+		width: 10px;
+		height: 10px;
+		margin-left: 5px;
+		margin-top: 5px;
+	}
+	
+	.swiper {
+		border: 1px dotted #888;
+		margin: 0 auto;
+		margin-top: 5.5px;
+		padding: 0;
+		width: 90%;
+	}
+	
+	.swiper img {
+		height: 100%;
+		width: 100%;
+		margin-top: 5px;
+	}
+	
+	.lunbo_btn {
+		width: 42px;
+		/*height: 8px;*/
+		margin: 0 auto;
+		margin-top: 4.5px;
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.btn_1 {
+		width: 8px;
+		height: 8px;
+		background: #f44663;
+		border-radius: 8px;
+	}
+	
+	.btn_2 {
+		width: 8px;
+		height: 8px;
+		background: #c3d8ea;
+		border-radius: 8px;
+	}
+	
+	.btn_3 {
+		width: 8px;
+		height: 8px;
+		background: #c3d8ea;
+		border-radius: 8px;
+	}
+	
+	.all_photo {
+		position: relative;
+	}
+	
+	.photo {
+		width: 90%;
+		height: 100%;
+		/*width:345px ;*/
+		/*height: 431.5px;*/
+		/*margin: 0 auto;*/
+		/*margin-top: 10px;*/
+		left: 5%;
+		top: 10px;
+		border: 1px dotted #888;
+		position: absolute;
+		z-index: 5;
+	}
+	
+	.photo img {
+		width: 100%;
+	}
+	
+	.photo_jieshao h1 {
+		position: absolute;
+		top: 360.5px;
+		left: 7.73%;
+		font-size: 17px;
+	}
+	
+	.photo_jieshao .infomation {
+		position: absolute;
+		top: 385.5px;
+		left: 5.6%;
+		font-size: 14.5px;
+		color: #7F7F7F;
+	}
+	
+	.photo_chongdie {
+		position: absolute;
+		width: 315px;
+		border: 1px dotted #888;
+		height: 422px;
+		top: 20px;
+		left: 30.5px;
+		z-index: 2;
+		background: #fff;
+	}
+	
+	.photo_chongdies {
+		position: absolute;
+		width: 285px;
+		border: 1px dotted #888;
+		height: 431.5px;
+		height: 422px;
+		top: 30px;
+		left: 45.5px;
+		z-index: 1;
+		background: #fff;
+	}
+	
+	.container_model {
+		width: 100%;
+		height: 100%;
+		background: black;
+		opacity: .8;
+		position: absolute;
+		z-index: 100;
+		top: 0;
+		left: 0;
+	}
+	
+	.container {
+		width: 364px;
+		height: 375px;
+		border: 1px dotted black;
+		position: absolute;
+		z-index: 100;
+		top: 118px;
+	}
+	
+	.coupon1 {}
+	
+	.coupon2 {
+		width: 195px;
+		height: 55px;
+		position: absolute;
+		top: 279px;
+		left: 94px;
+	}
+	
+	.coupon3 {
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 388px;
+		left: 179.5px;
+	}
+	
+	.Safety_knowledge {
+		width: 310px;
+		height: 463.5px;
+		/*margin-top:98.5px;
+		margin-left:32px;*/
+		position: absolute;
+		top: 98.5px;
+		left: 32px;
+		border: 1px dotted black;
+		z-index: 100;
+	}
+	
+	.knowledge {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.knowledge_2 {
+		width: 165px;
+		height: 60px;
+		position: absolute;
+		top: 382px;
+		left: 73.5px;
+	}
+	
+	.knowledge_title {
+		display: inline-block;
+		height: 15px;
+		font-size: 16px;
+		position: absolute;
+		top: 27.5px;
+		left: 116.5px;
+	}
+	
+	.know_class {
+		width: 254.5px;
+		height: 279px;
+		font-size: 14.5px;
+		color: #7F7F7F;
+		position: absolute;
+		top: 71px;
+		left: 28.5px;
+	}
+	
+	.off {
+		position: absolute;
+		top: 6.5px;
+		left: 287.5px;
+		width: 16px;
+		height: 16px;
+	}
+	
+	.Safety {
+		margin-top: 20px;
+		letter-spacing: 1px;
+	}
+</style>
